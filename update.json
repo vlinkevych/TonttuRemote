@@ -1,0 +1,20 @@
+{
+    "v":  1,
+    "issued":  "2026-11-03T21:16:19Z",
+    "expires":  "2027-02-01T21:16:19Z",
+    "movedTo":  null,
+    "channels":  {
+                     "beta":  {
+                                  "version":  "1.0.1-beta.2",
+                                  "published":  "2026-11-03",
+                                  "url":  "https://github.com/vlinkevych/TonttuRemote/releases/download/v1.0.1-beta.2/TonttuSetup-1.0.1-beta.2.exe",
+                                  "size":  58638754,
+                                  "sha256":  "585de7228ac615f12214e35bacb496cdb8901e600b570eedaddbe9ba7b65bdce",
+                                  "critical":  false,
+                                  "criticalBelow":  null,
+                                  "rolloutPercent":  100,
+                                  "notes":  "First public beta of Tonttu: control your Windows PC from your phone\u0027s browser over Wi-Fi. There\u0027s nothing to install on the phone.\n\nWhat it does\n- Touchpad and keyboard, with buttons that change with what\u0027s on screen: media, browser, video and slides.\n- Slides clicker, app switcher, volume and power.\n- Send files from the phone to the PC, and download files from the PC to the phone.\n- Use the phone as a microphone (needs a free virtual audio cable such as VB-CABLE).\n- Works with windows that run as administrator, like Task Manager and installers.\n- Updates install on their own when no phone is connected. You can change this in Settings › Updates.\n\nGetting started\n1. Run the setup. Windows may show \"Windows protected your PC\" because beta releases aren\u0027t code-signed yet. Click More info, then Run anyway.\n2. Scan the QR code on the PC with your phone\u0027s camera. Phone and PC need to be on the same Wi-Fi.\n3. Optional, on iPhone: install the certificate (Certificate page in the app) so the browser stops warning about the connection.\n\nGood to know\n- Everything stays on your home network. No account, no cloud, no ads.\n- This is a beta: expect rough edges. Use Send feedback in the app (Help page) to report problems.\n\nRequires Windows 10 (version 2004 or later) or Windows 11, 64-bit.",
+                                  "notesUrl":  "https://github.com/vlinkevych/TonttuRemote/releases/tag/v1.0.1-beta.2"
+                              }
+                 }
+}
