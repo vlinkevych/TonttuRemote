@@ -1,46 +1,42 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-releases="https://github.com/vlinkevych/TonttuRemote/releases">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark light">
-<title>Licence agreement · Tonttu</title>
-<meta name="description" content="Tonttu: Wi-Fi mouse and keyboard for your Windows PC, from your phone or tablet.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F3F3EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0B0D" media="(prefers-color-scheme: dark)">
+<title>Licence agreement | Tonttu</title>
+<meta name="description" content="The terms under which Tonttu is provided.">
+<link rel="canonical" href="https://tontturemote.app/licence">
+<meta property="og:title" content="Licence agreement | Tonttu">
+<meta property="og:description" content="The terms under which Tonttu is provided.">
+<meta property="og:url" content="https://tontturemote.app/licence">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://tontturemote.app/assets/img/pc-connect-light.webp">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/favicon.png">
 <link rel="stylesheet" href="/desktop/fonts.css">
-<style>
-  :root { color-scheme: dark; --bg: #0A0B0D; --s1: #15161A; --line: rgba(255,255,255,0.09); --txt: #EDEEF0; --sub: #8B9099; --lime: #C8F135; --link: #C8F135; }
-  @media (prefers-color-scheme: light) { :root { color-scheme: light; --bg: #EFEFEB; --s1: #FFFFFF; --line: rgba(0,0,0,0.1); --txt: #15161A; --sub: #5E636B; --lime: #5F7414; --link: #4A5A10; } }
-  html, body { margin: 0; background: var(--bg); color: var(--txt); font: 16px/1.6 Geist, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
-  a { color: var(--link); }
-  header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 24px; max-width: 760px; margin: 0 auto; }
-  header a.brand { font-weight: 700; font-size: 20px; color: var(--txt); text-decoration: none; }
-  header a.brand span { color: var(--lime); }
-  nav { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; }
-  nav a { color: var(--sub); text-decoration: none; }
-  nav a:hover { color: var(--txt); }
-  main { max-width: 760px; margin: 0 auto; padding: 8px 24px 64px; box-sizing: border-box; }
-  h1 { font-size: 34px; line-height: 1.2; letter-spacing: -0.02em; margin: 16px 0 8px; }
-  h2 { font-size: 22px; margin: 36px 0 8px; }
-  h3 { font-size: 17px; margin: 24px 0 6px; }
-  p, li { color: var(--txt); }
-  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 15px; }
-  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-  th { color: var(--sub); font-weight: 600; }
-  code { font-family: "Geist Mono", ui-monospace, Consolas, monospace; font-size: 14px; }
-  .btn { display: inline-block; padding: 12px 20px; border-radius: 12px; background: var(--lime); color: #0E1206; font-weight: 600; text-decoration: none; }
-  .sub { color: var(--sub); }
-  .card { background: var(--s1); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin: 16px 0; }
-  footer { max-width: 760px; margin: 0 auto; padding: 24px; color: var(--sub); font-size: 13px; border-top: 1px solid var(--line); }
-  @media (max-width: 480px) { h1 { font-size: 28px; } header { flex-direction: column; align-items: flex-start; } }
-</style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-<header>
-  <a class="brand" href="/"><span>Tonttu</span></a>
-  <nav><a href="/help">Help</a><a href="/privacy">Privacy</a><a href="/licence">Licence</a><a href="/contact">Contact</a><a href="https://github.com/vlinkevych/TonttuRemote/releases">Releases</a></nav>
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand-group"><a class="brand" href="/"><span class="logo"><i></i></span><b>Tonttu</b></a>
+    <a class="beta" href="https://github.com/vlinkevych/TonttuRemote/releases" title="Tonttu is in beta. See the release notes.">BETA</a></div>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/#features">Features</a>
+      <a href="/#files">File transfer</a>
+      <a href="/#how">How it works</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn primary small" href="https://github.com/vlinkevych/TonttuRemote/releases/latest" data-dl-link data-umami-event="download" data-umami-event-place="header">Download free</a>
+    </nav>
+  </div>
 </header>
 <main>
-<h1>Tonttu — Licence Agreement</h1>
+<div class="doc wrap"><h1>Tonttu — Licence Agreement</h1>
 <p>Last updated: 3 November 2026</p>
 <h2>1. About this agreement</h2>
 <p>This agreement is between you and Volodymyr Linkevych, an individual developer based in Cyprus (&quot;I&quot;, &quot;me&quot;). It covers the Tonttu app for Windows, its installer, its helper service, its updates, and the web remote page it serves to the device you control it from: a phone, tablet or another computer with a browser (&quot;the device&quot;). The Windows computer that runs the app is &quot;your computer&quot;. Together, the app and the page are &quot;the software&quot;. The software is meant to let you control your computer&#39;s mouse and keyboard, and related things such as apps, files, sound and the microphone, from your device over your own network.</p>
@@ -109,8 +105,21 @@
 <p><strong>Export and sanctions.</strong> Don&#39;t use, export or provide the software in breach of export control or sanctions laws that apply to you.</p>
 <p><strong>Security problems.</strong> If you find a security problem in the software, please report it privately to security@tontturemote.app before sharing it publicly. I&#39;ll confirm receipt and work on a fix.</p>
 <p><strong>Contact.</strong> Volodymyr Linkevych, Cyprus &#183; feedback@tontturemote.app</p>
-
+</div>
 </main>
-<footer>© 2026 Tonttu · <a href="/privacy">Privacy policy</a> · <a href="/licence">Licence</a> · <a href="/contact">Contact</a></footer>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="brand-col">
+      <a class="brand" href="/"><span class="logo"><i></i></span><b>Tonttu</b></a>
+      <p>Free for Windows 10 (2004+) and 11, 64-bit.<br>Made by one person in Cyprus. © 2026</p>
+    </div>
+    <div><h4>Product</h4><ul><li><a href="/#features">Features</a></li><li><a href="/#files">File transfer</a></li><li><a href="/#how">How it works</a></li><li><a href="/#faq">FAQ</a></li><li><a href="https://github.com/vlinkevych/TonttuRemote/releases" data-umami-event="releases-link">Releases</a></li></ul></div>
+    <div><h4>Support</h4><ul><li><a href="/install">Installation guide</a></li><li><a href="/help" data-umami-event="help-link" data-umami-event-place="footer">Help</a></li><li><a href="/contact">Contact</a></li><li><a href="https://github.com/vlinkevych/TonttuRemote/blob/main/SECURITY.md">Security policy</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="/privacy">Privacy policy</a></li><li><a href="/licence">Licence agreement</a></li></ul></div>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+
+
 </body>
 </html>

@@ -1,72 +1,338 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-releases="https://github.com/vlinkevych/TonttuRemote/releases">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark light">
-<title>Wi-Fi mouse and keyboard for your Windows PC · Tonttu</title>
-<meta name="description" content="Tonttu: Wi-Fi mouse and keyboard for your Windows PC, from your phone or tablet.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F3F3EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0B0D" media="(prefers-color-scheme: dark)">
+<title>Free Phone Mouse, Keyboard & File Transfer for PC | Tonttu</title>
+<meta name="description" content="Turn your iPhone, iPad or Android phone into a free wireless mouse and keyboard for your Windows PC, and transfer files both ways. No phone app required.">
+<link rel="canonical" href="https://tontturemote.app/">
+<meta property="og:title" content="Free Phone Mouse, Keyboard & File Transfer for PC | Tonttu">
+<meta property="og:description" content="Turn your iPhone, iPad or Android phone into a free wireless mouse and keyboard for your Windows PC, and transfer files both ways. No phone app required.">
+<meta property="og:url" content="https://tontturemote.app/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://tontturemote.app/assets/img/pc-connect-light.webp">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/favicon.png">
 <link rel="stylesheet" href="/desktop/fonts.css">
-<style>
-  :root { color-scheme: dark; --bg: #0A0B0D; --s1: #15161A; --line: rgba(255,255,255,0.09); --txt: #EDEEF0; --sub: #8B9099; --lime: #C8F135; --link: #C8F135; }
-  @media (prefers-color-scheme: light) { :root { color-scheme: light; --bg: #EFEFEB; --s1: #FFFFFF; --line: rgba(0,0,0,0.1); --txt: #15161A; --sub: #5E636B; --lime: #5F7414; --link: #4A5A10; } }
-  html, body { margin: 0; background: var(--bg); color: var(--txt); font: 16px/1.6 Geist, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
-  a { color: var(--link); }
-  header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 24px; max-width: 760px; margin: 0 auto; }
-  header a.brand { font-weight: 700; font-size: 20px; color: var(--txt); text-decoration: none; }
-  header a.brand span { color: var(--lime); }
-  nav { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; }
-  nav a { color: var(--sub); text-decoration: none; }
-  nav a:hover { color: var(--txt); }
-  main { max-width: 760px; margin: 0 auto; padding: 8px 24px 64px; box-sizing: border-box; }
-  h1 { font-size: 34px; line-height: 1.2; letter-spacing: -0.02em; margin: 16px 0 8px; }
-  h2 { font-size: 22px; margin: 36px 0 8px; }
-  h3 { font-size: 17px; margin: 24px 0 6px; }
-  p, li { color: var(--txt); }
-  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 15px; }
-  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-  th { color: var(--sub); font-weight: 600; }
-  code { font-family: "Geist Mono", ui-monospace, Consolas, monospace; font-size: 14px; }
-  .btn { display: inline-block; padding: 12px 20px; border-radius: 12px; background: var(--lime); color: #0E1206; font-weight: 600; text-decoration: none; }
-  .sub { color: var(--sub); }
-  .card { background: var(--s1); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin: 16px 0; }
-  footer { max-width: 760px; margin: 0 auto; padding: 24px; color: var(--sub); font-size: 13px; border-top: 1px solid var(--line); }
-  @media (max-width: 480px) { h1 { font-size: 28px; } header { flex-direction: column; align-items: flex-start; } }
-</style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-<header>
-  <a class="brand" href="/"><span>Tonttu</span></a>
-  <nav><a href="/help">Help</a><a href="/privacy">Privacy</a><a href="/licence">Licence</a><a href="/contact">Contact</a><a href="https://github.com/vlinkevych/TonttuRemote/releases">Releases</a></nav>
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand-group"><a class="brand" href="/"><span class="logo"><i></i></span><b>Tonttu</b></a>
+    <a class="beta" href="https://github.com/vlinkevych/TonttuRemote/releases" title="Tonttu is in beta. See the release notes.">BETA</a></div>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/#features">Features</a>
+      <a href="/#files">File transfer</a>
+      <a href="/#how">How it works</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn primary small" href="https://github.com/vlinkevych/TonttuRemote/releases/latest" data-dl-link data-umami-event="download" data-umami-event-place="header">Download free</a>
+    </nav>
+  </div>
 </header>
 <main>
-<p class="sub" style="margin:24px 0 0">Beta</p>
-<h1>Wi-Fi mouse and keyboard for your Windows PC</h1>
-<p>Control your computer from your phone or tablet: touchpad, keyboard, apps, files, sound and microphone. Nothing to install on the phone: scan a code and the remote opens in its browser.</p>
-<p><a class="btn" href="https://github.com/vlinkevych/TonttuRemote/releases/latest">Download for Windows</a></p>
-<p class="sub">Windows 10 (2004 or later) or Windows 11, 64-bit. Beta builds aren't code-signed yet: Windows shows "Windows protected your PC"; choose More info, then Run anyway.</p>
+<section class="hero wrap">
+  <div class="hero-text">
+    <h1 class="h-display">Control your PC from your phone.</h1>
+    <p class="sub">Mouse, keyboard, file transfers and more.</p>
+    <p class="lead">Control your Windows PC from your iPhone, iPad or Android phone or tablet’s browser. Use a wireless touchpad, type, launch applications, send files both ways and even use your phone as a microphone.</p>
+    <p class="strong">Free to use. No ads. No account. No mobile app installation required.</p>
+    <p class="muted">Just scan the QR code and use your browser.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="https://github.com/vlinkevych/TonttuRemote/releases/latest" data-dl-link data-dl-main data-umami-event="download" data-umami-event-place="hero">Download for Windows <span class="arrow">↓</span></a>
+      <a class="btn secondary" href="#how" data-umami-event="see-how">See how it works</a>
+    </div>
+    <p class="cta-note">Tonttu installs on your Windows PC. Send yourself the link and open it on the computer, or <a href="https://github.com/vlinkevych/TonttuRemote/releases/latest" data-dl-link>download the installer (.exe)</a> now.</p>
+  </div>
+  <div class="hero-visual">
+    <picture class="pc">
+      <source srcset="/assets/img/pc-connect-dark.webp" media="(prefers-color-scheme: dark)">
+      <img src="/assets/img/pc-connect-light.webp" width="1400" height="876" alt="Tonttu on Windows: the Connect page with the QR code and a connected iPhone" fetchpriority="high">
+    </picture>
+    <div class="phone"><img src="/assets/img/phone-explorer.webp" width="720" height="1565" alt="iPhone used as a mouse for a Windows PC, with File Explorer controls under the touchpad"></div>
+    <span class="pill"><span class="dot"></span>Connected over Wi-Fi</span>
+  </div>
+</section>
 
-<div class="card"><strong>Free, no account, no ads.</strong> Everything stays on your home network. The app checks for updates and installs them on its own when no device is connected; you can change that in Settings.</div>
+<section class="cards wrap">
+  <a class="card" href="#mouse">
+    <div class="text">
+      <span class="eyebrow">Phone as mouse and keyboard</span>
+      <h2>Use your phone as a mouse and keyboard for PC.</h2>
+      <p class="muted">A wireless touchpad and your phone’s own keyboard, on the iPhone, iPad or Android device you already have.</p>
+      <span class="link">Mouse and keyboard features →</span>
+    </div>
+    <div class="shot"><img src="/assets/img/phone-touchpad.webp" width="720" height="1565" alt="The touchpad on the phone" loading="lazy"></div>
+  </a>
+  <a class="card" href="#files">
+    <div class="text">
+      <span class="eyebrow">File transfer</span>
+      <h2>Transfer files between your PC, iPhone, iPad or Android.</h2>
+      <p class="muted">Both directions: send photos and files from your phone to your PC, or download files and folders from your PC to your phone. No cable.</p>
+      <span class="link">How file transfer works →</span>
+    </div>
+    <div class="shot"><img src="/assets/img/phone-download.webp" width="720" height="1565" alt="Downloading a folder from the PC to the iPhone" loading="lazy"></div>
+  </a>
+</section>
 
-<h2>How it works</h2>
-<ol>
-  <li>Install Tonttu on the PC. A QR code appears.</li>
-  <li>Scan it with the camera of your phone or tablet. The remote opens in the browser; the first time, click Allow on the PC.</li>
-  <li>Optional, on iPhone or iPad: install the certificate from the app's Certificate page, so the browser stops warning about the connection.</li>
-</ol>
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Features</span>
+      <h2 class="h-section">Everything you need to control your PC from your phone.</h2>
+    </div>
 
-<h2>What it does</h2>
-<ul>
-  <li>Touchpad and keyboard, with buttons that change with what's on screen: media, browser, video, slides.</li>
-  <li>Slides clicker, app switcher, volume and power.</li>
-  <li>Send files to the PC, download files from it.</li>
-  <li>Use the device as a microphone on the PC (needs a free virtual audio cable such as VB-CABLE).</li>
-  <li>Works with windows that run as administrator, like Task Manager and installers.</li>
-</ul>
+    <div class="feature" id="mouse">
+      <div class="text">
+        <span class="num">01</span>
+        <h3>Mouse and keyboard</h3>
+        <p class="lead">Turn your phone into a wireless touchpad and keyboard for your Windows PC.</p>
+        <ul>
+          <li>Wireless touchpad.</li>
+          <li>Mouse cursor control.</li>
+          <li>Clicking, scrolling and dragging.</li>
+          <li>Multitouch gestures.</li>
+          <li>Type on your PC using your phone’s keyboard.</li>
+        </ul>
+        <p class="note">Use your phone as a mouse for PC and as a keyboard, with Esc, Tab, Ctrl, Alt, Win and arrow keys one tap away.</p>
+      </div>
+      <div class="panel">
+        <div class="shot md up"><img src="/assets/img/phone-touchpad.webp" width="720" height="1565" alt="The touchpad: drag to move, tap to click, two fingers to scroll" loading="lazy"></div>
+        <div class="shot md"><img src="/assets/img/phone-keyboard.webp" width="720" height="1565" alt="Typing on the PC with the phone's keyboard" loading="lazy"></div>
+      </div>
+    </div>
 
-<p>Questions and problems: the <a href="/help">Help</a> page, or <a href="/contact">write to me</a>.</p>
+    <div class="feature flip">
+      <div class="text">
+        <span class="num">02</span>
+        <h3>Context-aware controls</h3>
+        <p class="lead">Convenient controls that adapt to what you’re doing on your PC.</p>
+        <ul>
+          <li>Browser controls.</li>
+          <li>Media playback controls.</li>
+          <li>Presentation and slideshow controls.</li>
+          <li>File operations.</li>
+        </ul>
+        <p class="note">The buttons under the touchpad change with the active application. Open a browser, play a video, start a slideshow or select files in File Explorer, and the matching controls appear on your phone.</p>
+      </div>
+      <div class="panel">
+        <div class="shot sm up"><img src="/assets/img/phone-browser.webp" width="720" height="1565" alt="Browser controls on the phone: back, forward, reload, new tab" loading="lazy"></div>
+        <div class="shot sm"><img src="/assets/img/phone-media.webp" width="720" height="1565" alt="Media playback controls for a video on the PC" loading="lazy"></div>
+        <div class="shot sm up mock"><img src="/assets/img/phone-slides.webp" width="584" height="1236" alt="Presentation remote: Previous and Next slide, blank screen (design mock-up)" loading="lazy"></div>
+      </div>
+    </div>
+
+    <div class="feature" id="files" style="display:block">
+      <div class="files-head">
+        <div class="text">
+          <span class="num">03</span>
+          <h3>Two-way file transfer</h3>
+          <p class="lead">Send files from your phone to your PC. Download files from your PC to your phone.</p>
+          <p class="tagline">Select on your PC. Download on your phone.</p>
+        </div>
+        <div>
+          <span class="eyebrow">PC → phone</span>
+          <ul class="steps" style="margin-top:12px">
+            <li>Browse files on your Windows computer.</li>
+            <li>Select individual files or entire folders on the PC.</li>
+            <li>Press Download on your phone.</li>
+            <li>Receive the selected files or folders directly on your phone.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="files-demo">
+        <div class="explorer" role="img" aria-label="File Explorer on the PC with a folder selected">
+          <div class="bar"><span class="tab">📁 Downloads</span><span class="win">—☐✕</span></div>
+          <div class="addr"><span>This PC › Downloads</span><span class="search">Search Downloads</span></div>
+          <div class="body">
+            <div class="side"><span>Home</span><span>Desktop</span><span class="on">Downloads</span><span>Documents</span><span>Pictures</span><span>Music</span><span>This PC</span></div>
+            <table>
+              <thead><tr><th>Name</th><th>Date modified</th><th>Type</th><th>Size</th></tr></thead>
+              <tbody>
+                <tr class="sel"><td class="name"><span class="ic folder"></span>Holiday 2026</td><td>28/10/2026 18:04</td><td>File folder</td><td class="size"></td></tr>
+                <tr><td class="name"><span class="ic pdf"></span>Invoice-Oct.pdf</td><td>21/10/2026 09:12</td><td>PDF</td><td class="size">840 KB</td></tr>
+                <tr><td class="name"><span class="ic docx"></span>Project brief.docx</td><td>19/10/2026 14:30</td><td>Word</td><td class="size">62 KB</td></tr>
+                <tr><td class="name"><span class="ic png"></span>Screenshot 2026-10-28.png</td><td>28/10/2026 11:47</td><td>PNG</td><td class="size">1.4 MB</td></tr>
+                <tr><td class="name"><span class="ic"></span>Setup notes.txt</td><td>12/10/2026 08:05</td><td>Text</td><td class="size">4 KB</td></tr>
+                <tr><td class="name"><span class="ic pdf"></span>Tax return 2025.pdf</td><td>02/10/2026 16:21</td><td>PDF</td><td class="size">2.1 MB</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="status">6 items · 1 item selected</div>
+        </div>
+        <div class="shot"><img src="/assets/img/phone-explorer-tap.webp" width="720" height="1565" alt="The phone shows File Explorer controls; a tap on Download starts the transfer" loading="lazy"></div>
+      </div>
+      <p class="caption">Folders and multiple files arrive as one zip file. <span class="provisional" style="margin-left:8px">File Explorer: illustration</span></p>
+      <div class="send-row">
+        <div class="shot"><img src="/assets/img/phone-send.webp" width="720" height="1565" alt="Send to PC on the phone: photos and videos, files, or the clipboard" loading="lazy"></div>
+        <div class="text">
+          <span class="eyebrow">Phone → PC</span>
+          <h4>Send files from your phone or tablet to your PC</h4>
+          <p class="muted">Photos, videos, any file, or the picture on your clipboard: pick several at once and they land on the PC.</p>
+          <ul class="steps">
+            <li>Tap Send to PC, choose Photos &amp; videos or Files.</li>
+            <li>The phone shows where the files will go: the folder open in File Explorer, or the PC’s received-files folder.</li>
+            <li>If you choose so, the PC asks before saving each file.</li>
+          </ul>
+        </div>
+        <picture class="dialog">
+          <source srcset="/assets/img/pc-dialog-file-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="/assets/img/pc-dialog-file-light.webp" width="772" height="434" alt="The PC asks: Save or Decline an incoming file, showing its name, size and destination folder" loading="lazy">
+        </picture>
+      </div>
+      <p class="wide-note">Wireless file transfer over your Wi-Fi. Transfer files between Windows and iPad, between PC and Android, and from PC to iPhone, all without a cable.</p>
+    </div>
+
+    <div class="feature flip" id="apps">
+      <div class="text">
+        <span class="num">04</span>
+        <h3>Switch and launch applications</h3>
+        <p class="lead">Control Windows applications without touching the PC.</p>
+        <ul>
+          <li>See currently running applications.</li>
+          <li>Switch between running applications.</li>
+          <li>Launch applications directly from your phone.</li>
+          <li>See which applications are currently active.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="shot lg"><img src="/assets/img/phone-apps.webp" width="720" height="1565" alt="Apps on the PC: switch to a running app or launch a pinned one" loading="lazy"></div>
+      </div>
+    </div>
+
+    <div class="row-feature" id="mic">
+      <div class="text">
+        <span class="num">05</span>
+        <div>
+          <h3>Use your phone as a PC microphone</h3>
+          <p class="muted">Use your phone as a wireless microphone for your Windows PC. Requires a free virtual audio cable installed on the PC.</p>
+        </div>
+      </div>
+      <div class="mic-shots"><img src="/assets/img/phone-mic-head.webp" width="720" height="104" alt="The phone's header while the microphone is on: a live level indicator next to the PC name" loading="lazy"><img src="/assets/img/phone-mic-bar.webp" width="720" height="122" alt="The button bar with the Mic button pressed" loading="lazy"></div>
+    </div>
+
+    <div class="compat" id="devices">
+      <div class="text">
+        <span class="eyebrow">06 · Phone and tablet compatibility</span>
+        <h3>Works from your phone or tablet</h3>
+        <div class="chips"><span>iPhone</span><span>iPad</span><span>Android phones</span><span>Android tablets</span></div>
+        <p class="muted">No dedicated mobile application installation is required. The interface runs in the device’s web browser. Control your PC from an iPad in landscape, with the touchpad and controls side by side.</p>
+      </div>
+      <div class="shot ipad"><img src="/assets/img/ipad-landscape.webp" width="1512" height="1065" alt="The remote on an iPad in landscape: touchpad and File Explorer controls on the left, function keys, shortcuts and arrows on the right (design mock-up)" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head row">
+      <div>
+        <span class="eyebrow">How it works</span>
+        <h2 class="h-section" style="margin-top:12px">Three steps, about a minute.</h2>
+      </div>
+      <div class="aside"><span>No mobile app installation required.</span><a class="link" href="/install" data-umami-event="install-guide" data-umami-event-place="how">Full installation guide →</a></div>
+    </div>
+    <div class="how">
+      <div class="step">
+        <div class="frame">
+          <picture><source srcset="/assets/img/pc-connect-dark.webp" media="(prefers-color-scheme: dark)"><img class="pc" src="/assets/img/pc-connect-light.webp" width="1400" height="876" alt="Tonttu installed on Windows" loading="lazy"></picture>
+        </div>
+        <div class="step-text"><span class="num">01</span><div><h3>Install Tonttu on your PC.</h3><p>Download and run the small Windows application.</p></div></div>
+      </div>
+      <div class="step">
+        <div class="frame">
+          <picture><source srcset="/assets/img/pc-qr-window-dark.webp" media="(prefers-color-scheme: dark)"><img class="qr" src="/assets/img/pc-qr-window-light.webp" width="737" height="1120" alt="The QR code window on the PC" loading="lazy"></picture>
+        </div>
+        <div class="step-text"><span class="num">02</span><div><h3>Scan the code with your phone.</h3><p>Scan the QR code displayed on your computer. Your phone needs to be on the same Wi-Fi network as the PC.</p></div></div>
+      </div>
+      <div class="step">
+        <div class="frame"><img class="phone" src="/assets/img/phone-browser.webp" width="720" height="1565" alt="The remote open in the phone's browser" loading="lazy"></div>
+        <div class="step-text"><span class="num">03</span><div><h3>Start controlling your PC.</h3><p>Your phone opens the remote interface in Safari, Chrome or another browser.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="privacy">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Privacy and security</span>
+      <h2 class="h-section">Your PC. Your network. Your control.</h2>
+    </div>
+    <div class="privacy">
+      <div><h3>Stays on your network</h3><p>The phone talks straight to your PC over local Wi-Fi.</p></div>
+      <div><h3>You approve each device</h3><p>A new phone can’t connect until you allow it on the PC.</p></div>
+      <div><h3>Encrypted connection</h3><p>HTTPS, with a certificate your PC creates.</p></div>
+      <div><h3>No account</h3><p>Nothing to sign up for, and no phone app to install.</p></div>
+    </div>
+    <div class="setup-row">
+      <div>
+        <h2>First time setting up?</h2>
+        <p>Windows and your phone’s browser each show a one-time warning. The installation guide shows what to tap, step by step.</p>
+      </div>
+      <a class="btn secondary" href="/install" data-umami-event="install-guide" data-umami-event-place="setup">Read the installation guide →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq" style="border-top:0;padding-top:24px">
+  <div class="wrap">
+    <div class="section-head row">
+      <div><span class="eyebrow">FAQ</span><h2 class="h-section" style="margin-top:12px">Questions people ask</h2></div>
+      <a class="link" href="/help" data-umami-event="help-link" data-umami-event-place="faq">More in Help →</a>
+    </div>
+    <div class="faq">
+      <details><summary><h3>Can I use my phone as a mouse for my PC?</h3></summary><p class="answer">Yes. Tonttu turns your phone screen into a touchpad for Windows: drag to move the cursor, tap to click, two fingers to scroll or right-click.</p></details>
+      <details><summary><h3>Does Tonttu work without an internet connection?</h3></summary><p class="answer">Yes. The phone and the PC talk over your local network, so they only need to be on the same Wi-Fi.</p></details>
+      <details><summary><h3>How can I control my Windows PC from my iPhone?</h3></summary><p class="answer">Install Tonttu on the PC, scan the QR code with the iPhone camera and allow the device on the PC. The remote opens in Safari.</p></details>
+      <details><summary><h3>Is my connection encrypted?</h3></summary><p class="answer">Yes. The connection uses HTTPS with a certificate your PC creates. That’s why the browser shows a warning the first time.</p></details>
+      <details><summary><h3>Can I use my iPad as a mouse and keyboard for Windows?</h3></summary><p class="answer">Yes. The remote works in Safari on iPad, with a landscape layout that keeps the touchpad and keys on screen together.</p></details>
+      <details><summary><h3>Does Tonttu work outside my home?</h3></summary><p class="answer">No. The phone and the PC need to be on the same network. Nothing goes over the internet.</p></details>
+      <details><summary><h3>Do I need to install an app on my phone?</h3></summary><p class="answer">No. The remote is a web page served by your PC and opens in your phone’s browser.</p></details>
+      <details><summary><h3>Does Tonttu support Android?</h3></summary><p class="answer">Yes. The remote opens in Chrome on Android phones and tablets, with the same touchpad, keyboard and controls.</p></details>
+      <details><summary><h3>Can I transfer files from PC to iPhone?</h3></summary><p class="answer">Yes. Select a file in File Explorer on the PC, then tap Download on the phone. It’s saved to Files › Downloads.</p></details>
+      <details><summary><h3>Can I transfer files between PC and Android?</h3></summary><p class="answer">Yes, both ways. Send to PC uploads from the phone, and Download saves files from the PC to the phone’s Downloads.</p></details>
+      <details><summary><h3>Can I transfer files from iPhone to PC?</h3></summary><p class="answer">Yes. Tap Send to PC and pick photos, videos or files. They land in the folder open on the PC, or in its received-files folder.</p></details>
+      <details><summary><h3>Which Windows versions are supported?</h3></summary><p class="answer">Windows 10 (version 2004 or later) and Windows 11, 64-bit.</p></details>
+      <details><summary><h3>Can I download folders from my PC to my phone?</h3></summary><p class="answer">Yes. Folders and multiple files are sent as one zip file, which the Files app opens with a tap.</p></details>
+      <details><summary><h3>Is Tonttu free?</h3></summary><p class="answer">Yes. It’s free, no ads, no user account.</p></details>
+      <details><summary><h3>Can I transfer files between Windows and iPad?</h3></summary><p class="answer">Yes, in both directions, the same way as on iPhone.</p></details>
+      <details><summary><h3>Can I control multiple PCs?</h3></summary><p class="answer">Install Tonttu on each PC. Each one shows its own QR code, and the remote shows the name of the PC it’s connected to.</p></details>
+      <details><summary><h3>Can I use Tonttu without Bluetooth?</h3></summary><p class="answer">Yes. Tonttu uses Wi-Fi, not Bluetooth, so there is nothing to pair in Bluetooth settings.</p></details>
+    </div>
+
+    <div class="cta">
+      <div>
+        <h2>Ready to try it?</h2>
+        <p>Install Tonttu on your Windows PC and start controlling it from your phone. It’s free, no ads, no user account.</p>
+      </div>
+      <div class="side">
+        <a class="btn primary" href="https://github.com/vlinkevych/TonttuRemote/releases/latest" data-dl-link data-umami-event="download" data-umami-event-place="bottom">Download for Windows <span class="arrow">↓</span></a>
+        <span class="muted">Free · No ads · No user account</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 </main>
-<footer>© 2026 Tonttu · <a href="/privacy">Privacy policy</a> · <a href="/licence">Licence</a> · <a href="/contact">Contact</a></footer>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="brand-col">
+      <a class="brand" href="/"><span class="logo"><i></i></span><b>Tonttu</b></a>
+      <p>Free for Windows 10 (2004+) and 11, 64-bit.<br>Made by one person in Cyprus. © 2026</p>
+    </div>
+    <div><h4>Product</h4><ul><li><a href="/#features">Features</a></li><li><a href="/#files">File transfer</a></li><li><a href="/#how">How it works</a></li><li><a href="/#faq">FAQ</a></li><li><a href="https://github.com/vlinkevych/TonttuRemote/releases" data-umami-event="releases-link">Releases</a></li></ul></div>
+    <div><h4>Support</h4><ul><li><a href="/install">Installation guide</a></li><li><a href="/help" data-umami-event="help-link" data-umami-event-place="footer">Help</a></li><li><a href="/contact">Contact</a></li><li><a href="https://github.com/vlinkevych/TonttuRemote/blob/main/SECURITY.md">Security policy</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="/privacy">Privacy policy</a></li><li><a href="/licence">Licence agreement</a></li></ul></div>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+
+
 </body>
 </html>

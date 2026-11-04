@@ -15,7 +15,7 @@
   document.body.classList.add('s-' + screen);
 
   let S = { pcName: document.body.dataset.pc || '', feedbackEmail: document.body.dataset.feedback || '' }; // state from the host
-  const L = { page: web ? 'help' : null, q: '', art: null, devSel: undefined, ftype: 'problem', diag: true, msg: '', step: 1 };
+  const L = { page: web ? 'help' : null, q: '', art: null, devSel: undefined, ftype: 'problem', diag: false, msg: '', email: '', rating: 0, allowPublish: false, pubName: '', step: 1 };
 
   // ---- host bridge ----
   let rid = 0;
@@ -38,6 +38,7 @@
         S = Object.assign({}, S, m.data);
         render();
       } else if (m.type === 'nav') {
+        if (m.tab) L.certTab = m.tab; // screenshots: open the Certificate page on a given device tab
         go(m.page);
       }
     });
@@ -90,6 +91,7 @@
     chat: '<path d="M4 5h16v11H9l-5 4z"/>',
     doc: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
     mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+    send: '<path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/>',
     android: '<path d="M7 10h10v7a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1zM7 10a5 5 0 0 1 10 0M9 6.5L8 5M15 6.5l1-1.5M4.5 11v4M19.5 11v4"/>',
   };
   const ic = (n) => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${P[n] || ''}</svg>`;
@@ -215,11 +217,13 @@
   function appWindow() {
     const page = currentPage();
     if (page === 'welcome') return `<div class="win"><main class="main full scroll">${welcome()}</main></div>`;
-    const navPage = page === 'feedback' ? 'help' : page;
+    const navPage = page;
     const nav = (id, label, icon, extra, cls) => `<button class="nav-item ${cls || ''}" data-act="go" data-arg="${id}" title="${label}"${navPage === id ? ' aria-current="page"' : ''}>${ic(icon)}<span class="lbl">${label}</span>${extra || ''}</button>`;
     const count = (S.devices || []).filter((d) => d.status === 'connected').length;
     const items = NAV.map(([id, label, icon]) => nav(id, label, icon, id === 'devices' && count ? `<span class="badge"><span class="dot"></span>${count}</span><span class="rail-dot"></span>` : ''));
-    const foot = (S.supportUrl ? `<button class="nav-item foot quiet" data-act="openUrl" data-arg="${esc(S.supportUrl)}" title="Support the developer">${ic('heart')}<span class="lbl">Support the developer</span></button>` : '')
+    // Feedback has its own entry while the app is in beta (the beta notice says "tell us"); it folds back into Help later.
+    const foot = nav('feedback', 'Feedback', 'chat', '', 'foot')
+      + (S.supportUrl ? `<button class="nav-item foot quiet" data-act="openUrl" data-arg="${esc(S.supportUrl)}" title="Support the developer">${ic('heart')}<span class="lbl">Support the developer</span></button>` : '')
       + nav('about', 'About', 'info', `<span class="meta">${esc(S.version || '')}</span>`, 'foot');
     const body = { connect, certificate, devices, settings, help, feedback, about }[page] || connect;
     return `<div class="win"><nav class="nav">${items.join('')}<div style="flex:1"></div>${foot}</nav>
@@ -260,12 +264,14 @@
         <span class="sub2" style="line-height:1.55">The connection between the device and this computer is encrypted. The certificate for it is made by this computer, not by a company the browser already knows, so the browser shows a security warning when the remote opens.</span>
         <span class="sub2" style="line-height:1.55">Installing the certificate tells the device to trust this computer. The warning goes away, the connection stays encrypted, and nothing leaves your home network.</span></div>
       <div class="grid2"><div class="qr-card" style="padding:20px 18px 18px">${android
-        ? `<div class="dashed" style="width:100%;padding:48px 16px">${ic('android')}<span style="font:600 13px var(--sans)">Android steps are coming</span><span class="sub small">They will appear here in a later version.</span></div>`
+        ? `${qrTile(S.caQr, 196, false, false)}<span style="font:600 14px var(--sans);margin-top:4px">Scan to download the certificate</span><span class="mono tone-sub wrap" style="font-size:11.5px;text-align:center">${esc(S.caFile)}</span>`
         : `${qrTile(S.certQr, 196, false, false)}<span style="font:600 14px var(--sans);margin-top:4px">Scan to download the profile</span><span class="mono tone-sub wrap" style="font-size:11.5px;text-align:center">${esc(S.profileFile)}</span>`}</div>
       <div class="card pad" style="display:flex;flex-direction:column;gap:12px">${seg([['ios', 'iPhone and iPad'], ['android', 'Android']], android ? 'android' : 'ios', 'certTab', 'Device type', 'sm')}
-        ${android ? '<span class="sub small" style="font-size:12.5px">Until then, Android phones and tablets show the security warning. In Chrome, tap Advanced, then Proceed. The remote works the same after that.</span>'
-          : steps(['Scan the code with the iPhone camera and tap Allow to download the profile.', 'Open Settings › General › VPN & Device Management.', `Tap the “${S.profileName || ''}” profile, then Install. If there's an older ${APP} profile, remove it.`, 'Open Settings › General › About › Certificate Trust Settings.', `Turn on full trust for “${S.authorityName || ''}”. Done.`])
-            + '<div style="display:flex;justify-content:flex-end;padding-top:4px"><button class="btn primary" style="height:34px;padding:0 18px;border-radius:11px;font-size:13px" data-act="go" data-arg="connect">Done</button></div>'}</div></div>`;
+        ${android
+          ? steps(['Scan the code with the camera. If the browser warns about the connection, tap Advanced, then Proceed; the file downloads.', 'Open Settings › Security & privacy › More security settings › Encryption & credentials (Samsung: Security and privacy › Other security settings).', `Tap Install a certificate › CA certificate, confirm Install anyway, and pick “${S.caFile || ''}” from Downloads.`, 'Done. Android may show a “network may be monitored” note: that is its standard message for any certificate you add yourself.'])
+            + '<span class="sub small" style="font-size:12px">Works in Chrome and Samsung Internet. Firefox on Android does not use certificates you add yourself; continue past its warning instead.</span>'
+          : steps(['Scan the code with the iPhone camera and tap Allow to download the profile.', 'Open Settings › General › VPN & Device Management.', `Tap the “${S.profileName || ''}” profile, then Install. If there's an older ${APP} profile, remove it.`, 'Open Settings › General › About › Certificate Trust Settings.', `Turn on full trust for “${S.authorityName || ''}”. Done.`])}
+        <div style="display:flex;justify-content:flex-end;padding-top:4px"><button class="btn primary" style="height:34px;padding:0 18px;border-radius:11px;font-size:13px" data-act="go" data-arg="connect">Done</button></div></div></div>`;
   }
   A.certTab = (v) => { L.certTab = v; render(); };
 
@@ -366,9 +372,11 @@
       ${S.error ? `<div class="banner" style="align-items:center">${ic('alert')}<span style="flex:1">${esc(S.error)}</span><button class="icon-btn" data-act="dismissError" aria-label="Dismiss">${ic('x')}</button></div>` : ''}
       ${sec('General', row('Start with Windows', 'Waits in the tray, so a device can connect any time.', toggle(S.startup, 'set', 'Start with Windows', 'startup'))
         + `<div class="stack"><div class="row-text"><span class="row-label">Notify when a device connects</span><span class="row-sub">${nt[2]}</span></div>${seg(NOTIFY.map((n) => [n[0], n[1]]), nt[0], 'notify', 'Notify when a device connects')}</div>`)}
+      ${sec('Updates', updatesSection())}
       ${sec('Files', `<div class="stack"><span class="row-label">Received files folder</span><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="path"><span>${esc(S.folder)}</span></span>
           <button class="btn secondary" style="height:34px" data-act="changeFolder">Change</button><button class="btn secondary" style="height:34px" data-act="openFolder" data-arg="received">Open folder</button></div>
           <span class="row-sub">A received file is also pasted into the app that's in front.</span></div>`
+        + row('Save into the folder that is open in File Explorer', 'When a File Explorer window is in front, a sent file lands in that folder instead of the received-files folder. The device shows where the file will go and can choose the received-files folder for a send.', toggle(S.saveToOpenFolder, 'set', 'Save into the open File Explorer folder', 'saveToOpenFolder'))
         + row('Ask before saving received files', 'A small window asks you to Save or Decline.', toggle(S.askSave, 'set', 'Ask before saving received files', 'askSave'))
         + `<div class="stack"><span class="row-label">Allow downloading files from this computer</span>${seg(DL.map((d) => [d[0], d[1]]), dl[0], 'dlPolicy', 'Allow downloading files')}<span class="row-sub">${dl[2]} Select files or folders in File Explorer, then tap Download on the device.</span></div>`)}
       ${sec('Microphone', micSection())}
@@ -382,7 +390,6 @@
           : "The app's helper service isn't running, so your phone or tablet can't control windows that run as administrator. Reinstalling the app sets it up again."}</span></div>
           <span class="pill ${S.helperRunning ? 'tone-green' : 'tone-amber'}"><span class="dot"></span>${S.helperRunning ? 'Can be controlled' : 'Not available'}</span></div>`
         + row('Let the device answer Windows permission prompts', 'The dimmed screen that asks "Do you want to allow this app to make changes?". On: the device can approve anything that asks for administrator rights, like you at the keyboard, and so could any program running under your Windows account. Never the lock screen. Changing this asks for administrator permission.', toggle(S.uacPrompts, 'set', 'Let the device answer Windows permission prompts', 'uacPrompts', !S.helperRunning)))}
-      ${sec('Updates', updatesSection())}
       ${sec('Data and logs', `<div class="row"><div class="row-text"><span class="row-label">Logs</span><span class="row-sub">What the app did and any errors, kept 3 days (5 MB at most). Never what you type, file names, window titles or addresses in full.${S.logSize ? ` Now ${esc(S.logSize)}.` : ''}</span></div>
           <div style="display:flex;gap:8px"><button class="btn secondary" style="height:34px" data-act="openFolder" data-arg="logs">${ic('folderOpen')}Open</button>${L.delLogs ? `<button class="btn primary" style="height:34px" data-act="deleteLogs">Delete all</button><button class="btn ghost" style="height:34px" data-act="cancelDelLogs">Cancel</button>` : `<button class="btn secondary" style="height:34px" data-act="askDelLogs">Delete</button>`}</div></div>`
         + row('Troubleshooting mode', S.troubleshooting ? `Detailed logs are on until ${esc(S.troubleshootUntil || '')}, then it turns itself off. Same rules: no typed text, names or addresses.` : 'Turn on when asked to, before reproducing a problem: detailed logs for 24 hours, then it turns itself off.', toggle(S.troubleshooting, 'set', 'Troubleshooting mode', 'troubleshooting')), ' style="padding-bottom:8px"')}
@@ -443,7 +450,7 @@
     const m = UPD.find((x) => x[0] === S.updateMode) || UPD[0];
     return ver + avail + (warn ? `<div class="stack">${warn}</div>` : '')
       + `<div class="stack"><div class="row-text"><span class="row-label">Install updates</span><span class="row-sub">${m[2]}</span></div>${seg(UPD.map((x) => [x[0], x[1]]), m[0], 'updMode', 'Install updates')}</div>`
-      + `<div class="stack"><div class="row-text"><span class="row-label">Update channel</span><span class="row-sub">${S.updateChannel === 'stable' ? 'Only finished releases.' : 'Test versions as well as finished releases: new things sooner, with a few more bugs.'}</span></div>${seg([['beta', 'Beta'], ['stable', 'Stable']], S.updateChannel || 'beta', 'updChannel', 'Update channel')}</div>`;
+      + ((S.updateChannels || []).includes('stable') ? `<div class="stack"><div class="row-text"><span class="row-label">Update channel</span><span class="row-sub">${S.updateChannel === 'stable' ? 'Only finished releases.' : 'Test versions as well as finished releases: new things sooner, with a few more bugs.'}</span></div>${seg([['beta', 'Beta'], ['stable', 'Stable']], S.updateChannel || 'beta', 'updChannel', 'Update channel')}</div>` : '');
   }
   A.updCheck = async () => { L.updChecking = true; render(); await call('updateCheck'); L.updChecking = false; render(); };
   A.updInstall = async () => {
@@ -477,9 +484,11 @@
         { id: 'public', q: 'The network is marked Public', go: 'connect', a: ['Windows blocks devices on networks it marks as Public. On the Connect page choose Mark as Private, or turn on Allow devices on networks Windows marks as Public in Settings › Network.'] }] },
       { t: 'Certificate warning', items: [
         { id: 'why', q: 'Why does the browser warn about the certificate?', a: ['The connection is encrypted with a certificate made by your own computer, not by a company the browser already knows. That is why it warns.', 'The connection stays on your home network. Install the certificate once on each phone or tablet and the warning goes away.'] },
-        { id: 'install', q: 'How do I install the certificate on an iPhone?', go: 'certificate', a: ['1. Open Certificate in the app. Scan the code with the iPhone camera and tap Allow.', `2. Open Settings › General › VPN & Device Management. Tap the “${APP} - ${pc}” profile, then Install.`, `3. Open Settings › General › About › Certificate Trust Settings and turn on full trust for “${APP} Local Authority (${pc})”.`, "You only do this once per device. It keeps working when the computer's address changes. Steps for Android are coming; until then, tap Advanced › Proceed in Chrome."] }] },
+        { id: 'install', q: 'How do I install the certificate on an iPhone?', go: 'certificate', a: ['1. Open Certificate in the app. Scan the code with the iPhone camera and tap Allow.', `2. Open Settings › General › VPN & Device Management. Tap the “${APP} - ${pc}” profile, then Install.`, `3. Open Settings › General › About › Certificate Trust Settings and turn on full trust for “${APP} Local Authority (${pc})”.`, "You only do this once per device. It keeps working when the computer's address changes."] },
+        { id: 'installAndroid', q: 'How do I install the certificate on an Android phone?', go: 'certificate', a: ['1. Open Certificate in the app, choose Android and scan the code. If the browser warns, tap Advanced › Proceed; the certificate file downloads.', '2. Open Settings › Security & privacy › More security settings › Encryption & credentials › Install a certificate › CA certificate (Samsung: Security and privacy › Other security settings › Install from device storage).', `3. Confirm, then pick the downloaded “${APP.toLowerCase()}-ca.crt”.`, 'Works in Chrome and Samsung Internet. Firefox on Android ignores certificates you add yourself, so there you continue past the warning.'] }] },
       { t: 'Home screen icon', items: [
-        { id: 'home', q: 'How do I add the remote to the home screen?', a: ['iPhone and iPad: in Safari, tap Share › Add to Home Screen.', 'Android: in Chrome, tap ⋮ › Add to Home screen.'] }] },
+        { id: 'home', q: 'How do I add the remote to the home screen?', a: ['iPhone and iPad: in Safari, tap Share › Add to Home Screen.', 'Android: in Chrome, tap ⋮ › Add to Home screen.'] },
+        { id: 'homeCert', q: 'The home-screen icon stopped working', go: 'certificate', a: ['A home-screen app can only connect while the device trusts the certificate: unlike the browser, it has no “continue anyway” button. If the certificate was removed or its trust turned off, the icon opens a blank page.', 'Install the certificate again from the Certificate page, or open the remote in the browser instead: scan the code, continue past the warning, and use it there.', 'The same happens when the computer gets a new network address: install the new certificate, then the icon works again.'] }] },
       { t: 'Sending and downloading files', items: [
         { id: 'send', q: 'How do I send a file to the computer?', a: ["Tap Send file in the remote. The file is saved to the received files folder (Settings › Files) and pasted into the app that's in front on the computer.", 'Settings can ask you before each file is saved.'] },
         { id: 'down', q: 'Can a phone or tablet download files from this computer?', a: ['If Settings › Files allows it. Select files or folders in File Explorer on the computer, then tap Download on the device.', 'Choose Ask every time to approve each download. Several files or a folder are sent as one zip.'] }] },
@@ -497,7 +506,7 @@
         { id: 'sent', q: 'What does the computer send to the device?', a: ['Only to paired devices, encrypted, on your own network:', "The text around the cursor in the field you're typing in (never password fields), so the device's text field can follow it.", 'The names of open windows (for the app switcher) and of the app in front, and what is playing.', 'The clipboard and files, only when you ask for them on the device.'] },
         { id: 'qr', q: 'Is the QR code secret?', a: ['Yes, treat it like a key. Anyone who sees it, for example in a screen share, a stream or a photo, can ask to pair. A new device still needs your Allow on this computer, and the code changes after each pairing.', "Don't show it while sharing your screen. Make a new code on the Connect page if you think someone saw it."] },
         { id: 'wifi', q: 'Can I use it on public Wi-Fi?', go: 'connect', a: ["It's made for your home network. On public networks (café, hotel, airport) Windows blocks devices, and that's the safe setting.", 'Anyone on the same Wi-Fi can open the page, but not control the computer without pairing. After 10 wrong codes an address is ignored for 15 minutes.', 'Work computer? Check with IT first: remote-control tools may not be allowed.'] },
-        { id: 'certscope', q: 'What does the certificate let my phone or tablet trust?', go: 'certificate', a: [`Only this computer on your home network. It's limited to local addresses, so it can't be used to fake any website.`, `Uninstalling ${APP} doesn't remove it from the device. Delete it in Settings › General › VPN & Device Management.`] },
+        { id: 'certscope', q: 'What does the certificate let my phone or tablet trust?', go: 'certificate', a: [`Only this computer on your home network. It's limited to local addresses, so it can't be used to fake any website.`, `Uninstalling ${APP} doesn't remove it from the device. Delete it on an iPhone in Settings › General › VPN & Device Management; on Android in Settings › Security & privacy › More security settings › Encryption & credentials › User credentials.`] },
         { id: 'priv', q: 'Does anything leave my home network?', link: { label: 'Privacy policy', href: 'https://tontturemote.app/privacy' }, a: ["The remote itself never: the device and the computer talk directly on your local network. There's no account and no cloud.", 'Update checks fetch a small file from the website; downloads come from GitHub. Only the app version is sent, plus the IP address any website sees.', 'Feedback only leaves when you send the email yourself.'] }] },
     ];
   }
@@ -533,40 +542,82 @@
     const back = `<button class="btn ghost" style="align-self:flex-start;font-size:13px;font-weight:500;padding:0 10px 0 6px" data-act="go" data-arg="help">${ic('arrowL')}Help</button>`;
     const r = L.fres;
     const fileChip = (f) => `<span class="path" style="flex:none;min-width:0;max-width:100%;gap:8px">${ic('doc')}<span>${esc(f.split('\\').slice(-2).join('\\'))}</span></span>`;
+    const done = `<button class="btn secondary md" data-act="go" data-arg="help">Done</button>`;
+    if (r && r.sent) {
+      return `<div class="article" style="max-width:560px">${back}<div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:28px 0">
+        <span class="result-ic">${ic('check')}</span><div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 20px var(--sans)">Sent. Thank you.</span>
+        <span class="sub" style="line-height:1.55">${r.attached ? 'Your message and the attachments are on their way.' : 'Your message is on its way.'}${r.testimonial ? ` Thanks for the review: it may appear on the website as ${esc(r.testimonial)}.` : L.email.trim() ? ` A reply, if any, goes to ${esc(L.email.trim())}.` : ' You left no email address, so there will be no reply.'}</span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">${done}</div></div></div>`;
+    }
+    if (r && r.failed) {
+      return `<div class="article" style="max-width:560px">${back}<div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:28px 0">
+        <span class="result-ic amber">${ic('alert')}</span><div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 20px var(--sans)">Not sent</span>
+        <span class="sub" style="line-height:1.55">${esc(r.error || 'Something went wrong.')} Your message is kept below.</span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary md" data-act="fbAgain">Try again</button>${S.feedbackEmail ? `<button class="btn secondary md" data-act="sendFbMail">${ic('mail')}Open in email instead</button>` : ''}</div></div></div>`;
+    }
     if (r && r.opened) {
       return `<div class="article" style="max-width:560px">${back}<div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:28px 0">
         <span class="result-ic">${ic('mail')}</span><div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 20px var(--sans)">Finish in your email app</span>
         <span class="sub" style="line-height:1.55">Your email app opened with the message. Check it and press Send there.${r.email ? '' : ' Add the recipient yourself: this version has no feedback address yet.'}</span></div>
         ${r.file ? `<span class="sub small">Attach this file from the Desktop:</span>${fileChip(r.file)}` : ''}
-        <div style="display:flex;gap:8px;flex-wrap:wrap">${r.file ? `<button class="btn secondary md" data-act="showFile" data-arg="${esc(r.file)}">Show in folder</button>` : ''}<button class="btn secondary md" data-act="go" data-arg="help">Done</button></div></div></div>`;
+        <div style="display:flex;gap:8px;flex-wrap:wrap">${r.file ? `<button class="btn secondary md" data-act="showFile" data-arg="${esc(r.file)}">Show in folder</button>` : ''}${done}</div></div></div>`;
     }
-    if (r && !r.opened) {
+    if (r && r.mail && !r.opened) {
       return `<div class="article" style="max-width:560px">${back}<div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:28px 0">
         <span class="result-ic amber">${ic('mail')}</span><div style="display:flex;flex-direction:column;gap:6px"><span style="font:600 20px var(--sans)">No email app found</span>
         <span class="sub" style="line-height:1.55">This computer has no email app set up for sending. ${r.file ? 'Your message was saved to the Desktop, so nothing is lost.' : ''}</span></div>
         ${r.file ? fileChip(r.file) : ''}
-        <div style="display:flex;gap:8px;flex-wrap:wrap">${r.file ? `<button class="btn secondary md" data-act="showFile" data-arg="${esc(r.file)}">Show in folder</button>` : ''}<button class="btn secondary md" data-act="fbAgain">Try again</button></div></div></div>`;
+        <div style="display:flex;gap:8px;flex-wrap:wrap">${r.file ? `<button class="btn secondary md" data-act="showFile" data-arg="${esc(r.file)}">Show in folder</button>` : ''}<button class="btn secondary md" data-act="fbAgain">Back to the message</button></div></div></div>`;
     }
-    const ph = { problem: 'What happened, and what did you expect?', feature: 'What would you like the app to do?', other: 'Your message' }[L.ftype];
-    return `<div class="article" style="max-width:560px">${back}<div class="row-text" style="gap:4px"><span class="h-page">Send feedback</span><span class="sub">Report a problem or suggest something. It opens in your email app, so you see exactly what's sent.</span></div>
-      ${seg([['problem', 'Problem'], ['feature', 'Feature request'], ['other', 'Other']], L.ftype, 'ftype', 'Feedback type')}
-      <label class="field"><span style="font:500 13px var(--sans)">Message</span><textarea rows="6" maxlength="1500" data-k="msg" data-input="setMsg" placeholder="${ph}">${esc(L.msg)}</textarea></label>
-      <div class="card pad" style="display:flex;flex-direction:column;gap:8px;padding:12px 14px"><div style="display:flex;align-items:center;gap:10px">
+    const ph = { problem: 'What happened, and what did you expect?', feature: 'What would you like the app to do, and when would you use it?', other: `What do you like, and what would make ${APP} better?`, security: 'What did you find, and how can it be reproduced?' }[L.ftype];
+    const online = !!S.contactApi;
+    return `<div class="article" style="max-width:560px">${back}<div class="row-text" style="gap:4px"><span class="h-page">Send feedback</span><span class="sub">${online ? 'Report a problem, suggest something or ask a question. It goes straight to the developer.' : "Report a problem or suggest something. It opens in your email app, so you see exactly what's sent."}</span></div>
+      ${seg([['problem', 'Bug'], ['feature', 'Idea'], ['other', 'Feedback'], ['security', 'Security']], L.ftype, 'ftype', 'Feedback type')}
+      ${online && L.ftype === 'other' ? `<div class="card pad" style="display:flex;flex-direction:column;gap:10px;padding:12px 14px">
+        <span style="font:500 13px var(--sans)">How would you rate ${APP}?</span>
+        <div style="display:flex;align-items:center;gap:2px" role="radiogroup" aria-label="Rating">${[1, 2, 3, 4, 5].map((n) => `<button class="star${n <= L.rating ? ' on' : ''}" role="radio" aria-checked="${n === L.rating}" aria-label="${n} star${n > 1 ? 's' : ''}" data-act="setRating" data-arg="${n}">★</button>`).join('')}<span class="sub small" style="margin-left:10px">${['Tap a star', 'Poor', 'Fair', 'Good', 'Very good', 'Excellent'][L.rating]}</span></div>
+        <button role="checkbox" aria-checked="${L.allowPublish}" data-act="toggleAllow" style="display:flex;align-items:center;gap:10px;padding:0;border:0;background:transparent;font:500 13px var(--sans);text-align:left"><span class="check-box">${L.allowPublish ? ic('check') : ''}</span>You may publish my feedback on the website as a testimonial.</button>
+        ${L.allowPublish ? `<label class="field" style="padding-left:28px"><span style="font:500 13px var(--sans)">Name to show <span class="sub small" style="font-weight:400">(optional)</span></span><input type="text" maxlength="60" data-k="pubName" data-input="setPubName" value="${esc(L.pubName)}" placeholder="e.g. Mika, Helsinki" spellcheck="false"><span class="sub small">Leave empty to appear as “${APP} user”. Your email is never published.</span></label>` : ''}</div>` : ''}
+      ${L.ftype === 'security' ? `<div class="note">${ic('info')}<span>Security reports are private. Leave your email so the developer can follow up, and don't share the issue publicly until it's fixed.</span></div>` : ''}
+      <label class="field"><span style="font:500 13px var(--sans)">Message</span><textarea rows="6" maxlength="5000" data-k="msg" data-input="setMsg" placeholder="${ph}">${esc(L.msg)}</textarea></label>
+      ${online ? `<label class="field"><span style="font:500 13px var(--sans)">Your email <span class="sub small" style="font-weight:400">(optional, only for a reply)</span></span><input type="email" maxlength="200" data-k="email" data-input="setEmail" value="${esc(L.email)}" placeholder="you@example.com" autocomplete="email" spellcheck="false"></label>` : ''}
+      ${online ? `<div class="card pad" style="display:flex;align-items:center;gap:10px;padding:10px 14px">${L.file ? `<span class="path" style="flex:1;min-width:0;gap:8px">${ic('doc')}<span style="overflow:hidden;text-overflow:ellipsis">${esc(L.file.name)}</span><span class="sub small" style="flex:none">${fmtSize(L.file.size)}</span></span><button class="btn ghost" style="height:28px;font-size:12px" data-act="fbClearFile">Remove</button>` : `<button class="btn secondary" style="height:30px;font-size:12px" data-act="fbPickFile">${ic('doc')}Attach a file</button><span class="sub small">A screenshot, a recording, anything up to 10 MB.</span>`}</div>` : ''}
+      ${L.ftype === 'problem' || L.ftype === 'security' ? `<div class="card pad" style="display:flex;flex-direction:column;gap:8px;padding:12px 14px"><div style="display:flex;align-items:center;gap:10px">
         <button role="checkbox" aria-checked="${L.diag}" data-act="toggleDiag" style="display:flex;align-items:center;gap:10px;padding:0;border:0;background:transparent;font:500 13px var(--sans)"><span class="check-box">${L.diag ? ic('check') : ''}</span>Attach diagnostics</button>
         <div style="flex:1"></div><button class="btn ghost" style="height:26px;font-size:12px;font-weight:500" data-act="toggleIncl">What's included${ic(L.incl ? 'chevU' : 'chevD')}</button></div>
-        ${L.incl ? `<div style="display:flex;flex-direction:column;gap:8px;padding-left:28px"><span class="sub small" style="line-height:1.55">Your message, the app and Windows versions, and the app's logs from the last 3 days, saved as a zip on the Desktop for you to attach. Addresses, your Windows user name, email addresses and anything key-like are blanked out first. Never pairing codes, keys or what you type.</span><button class="btn secondary" style="height:30px;font-size:12px;align-self:flex-start" data-act="fbPreview">Show the exact text</button></div>` : ''}</div>
-      ${S.feedbackEmail ? '' : '<div class="note">' + ic('info') + '<span>This version has no feedback address yet. The email opens without a recipient.</span></div>'}
-      <div class="actions" style="padding-bottom:8px"><button class="btn secondary md" data-act="go" data-arg="help">Cancel</button><button class="btn primary md" data-act="sendFb"${L.msg.trim() && !L.sending ? '' : ' disabled'}>${ic('mail')}${L.sending ? 'Opening…' : 'Open in email'}</button></div></div>`;
+        ${L.incl ? `<div style="display:flex;flex-direction:column;gap:8px;padding-left:28px"><span class="sub small" style="line-height:1.55">Your message, the app and Windows versions, and the app's logs from the last 3 days${online ? ', as a zip file attached to the message' : ', saved as a zip on the Desktop for you to attach'}. Addresses, your Windows user name, email addresses and anything key-like are blanked out first. Never pairing codes, keys or what you type.</span><button class="btn secondary" style="height:30px;font-size:12px;align-self:flex-start" data-act="fbPreview">Show the exact text</button></div>` : ''}</div>` : ''}
+      ${online || S.feedbackEmail ? '' : '<div class="note">' + ic('info') + '<span>This version has no feedback address yet. The email opens without a recipient.</span></div>'}
+      ${online ? `<span class="sub small">Sent over the internet to the developer's mailbox; the <button class="btn link" style="height:auto;padding:0;font-size:12px" data-act="openUrl" data-arg="${esc((S.website || '') + '/privacy')}">privacy policy</button> says what is kept.</span>` : ''}
+      <div class="actions" style="padding-bottom:8px"><button class="btn secondary md" data-act="go" data-arg="help">Cancel</button>${online && S.feedbackEmail ? `<button class="btn secondary md" data-act="sendFbMail"${L.msg.trim() && !L.sending ? '' : ' disabled'}>${ic('mail')}Open in email</button>` : ''}<button class="btn primary md" data-act="${online ? 'sendFb' : 'sendFbMail'}"${L.msg.trim() && !L.sending ? '' : ' disabled'}>${ic(online ? 'send' : 'mail')}${L.sending ? (online ? 'Sending…' : 'Opening…') : (online ? 'Send' : 'Open in email')}</button></div></div>`;
   }
-  A.ftype = (v) => { L.ftype = v; L.diag = v === 'problem'; render(); };
+  const FB_KIND = { problem: 'Bug', feature: 'Idea', other: 'Feedback', security: 'Security' };
+  const FB_MAIL_KIND = { problem: 'Problem', feature: 'Feature request', other: 'Other', security: 'Security' };
+  A.ftype = (v) => { L.ftype = v; L.diag = false; render(); }; // diagnostics offered for Bug and Security, always unticked by default (user's choice each time)
   A.setMsg = (v) => { const had = !!L.msg.trim(); L.msg = v; if (had !== !!v.trim()) render(); };
+  A.setEmail = (v) => { L.email = v; };
+  A.setRating = (n) => { L.rating = +n; render(); };
+  A.toggleAllow = () => { L.allowPublish = !L.allowPublish; render(); };
+  A.setPubName = (v) => { L.pubName = v; };
+  A.fbPickFile = async () => { const r = await call('feedbackPickFile'); if (r.ok && S.feedbackFile) L.file = S.feedbackFile; else if (r.error) L.fres = { failed: true, error: r.error, keep: true }; render(); };
+  A.fbClearFile = () => { L.file = null; render(); };
+  function fmtSize(n) { return n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB'; }
   A.toggleDiag = () => { L.diag = !L.diag; render(); };
   A.toggleIncl = () => { L.incl = !L.incl; render(); };
   A.sendFb = async () => {
     L.sending = true; render();
-    await call('feedback', { kind: { problem: 'Problem', feature: 'Feature request', other: 'Other' }[L.ftype], message: L.msg, diag: L.diag });
+    const fb = L.ftype === 'other';
+    const res = await call('feedbackSend', { kind: FB_KIND[L.ftype], message: L.msg, email: L.email.trim(), diag: L.diag && (L.ftype === 'problem' || L.ftype === 'security'), file: L.file ? L.file.path : '', rating: fb ? L.rating : 0, allowPublish: fb && L.allowPublish, publicName: fb && L.allowPublish ? L.pubName.trim() : '' });
     L.sending = false;
-    L.fres = S.feedbackResult || { opened: false };
+    const sent = S.feedbackSent || {};
+    L.fres = res.ok && sent.sent ? { sent: true, attached: !!sent.attached, testimonial: fb && L.allowPublish ? (L.pubName.trim() || `${APP} user`) : '' } : { failed: true, error: sent.error || res.error || '' };
+    if (L.fres.sent) { L.msg = ''; L.file = null; L.rating = 0; L.allowPublish = false; L.pubName = ''; }
+    render();
+  };
+  A.sendFbMail = async () => {
+    L.sending = true; render();
+    await call('feedback', { kind: FB_MAIL_KIND[L.ftype], message: L.msg, diag: L.diag });
+    L.sending = false;
+    L.fres = Object.assign({ mail: true }, S.feedbackResult || { opened: false });
     if (L.fres.opened) L.msg = '';
     render();
   };
@@ -580,7 +631,8 @@
       <div class="card rows"><div class="row" style="padding:12px 0"><span class="sub2" style="flex:1;font-weight:500">Version</span><span class="mono small">${esc(S.semVersion || S.version)}</span></div>
         ${S.buildDate ? `<div class="row" style="padding:12px 0"><span class="sub2" style="flex:1;font-weight:500">Build date</span><span class="mono small">${esc(S.buildDate)}</span></div>` : ''}
         <div class="row" style="padding:10px 0;gap:12px"><span class="sub2" style="font-weight:500">Data folder</span><span class="mono small ellipsis" style="flex:1;text-align:right">${esc(S.dataFolder)}</span><button class="btn secondary" style="height:30px;font-size:12px" data-act="openFolder" data-arg="data">Open</button></div></div>
-      <div class="help-card"><button class="list-btn" data-act="aboutCheck">${ic('refresh')}<span style="flex:1">Check for updates</span>${ic('chevR')}</button>
+      <div class="help-card"><button class="list-btn" data-act="aboutCheck"${L.updChecking ? ' disabled' : ''}>${ic('refresh')}<span style="flex:1">${L.updChecking ? 'Checking for updates…' : 'Check for updates'}</span>${ic('chevR')}</button>
+        ${L.aboutChecked && !L.updChecking ? `<div class="row" style="padding:10px 16px;gap:12px"><span class="sub small" style="flex:1">${esc(S.lastCheckResult || '')}</span>${S.update ? `<button class="btn primary" style="height:30px;font-size:12px" data-act="updInstall"${L.updInstalling ? ' disabled' : ''}>${L.updInstalling ? 'Installing…' : 'Install now'}</button>` : ''}</div>` : ''}
         ${S.website ? `<button class="list-btn" data-act="openUrl" data-arg="${esc(S.website)}/licence">${ic('doc')}<span style="flex:1">Licence agreement</span>${ic('ext')}</button>
         <button class="list-btn" data-act="openUrl" data-arg="${esc(S.website)}/privacy">${ic('shieldCheck')}<span style="flex:1">Privacy policy</span>${ic('ext')}</button>` : ''}
         <button class="list-btn" data-act="openFolder" data-arg="notices">${ic('doc')}<span style="flex:1">Third-party notices</span>${ic('chevR')}</button>
@@ -589,7 +641,8 @@
       <span class="sub small">Free to use. No account, no ads.</span></div>`;
   }
 
-  A.aboutCheck = () => { go('settings'); if (S.updatesEnabled) A.updCheck(); };
+  // Checks in place: the result shows under the row, on this page.
+  A.aboutCheck = async () => { L.aboutChecked = true; await A.updCheck(); };
 
   // ---- Welcome (first run, inside the app window) ----
   function welcome() {
@@ -604,7 +657,7 @@
       const list = cert ? ['Scan and tap Allow.', 'Settings › General › VPN & Device Management › Install.', `Settings › General › About › Certificate Trust Settings › turn on full trust for “${S.authorityName || ''}”.`]
         : ['Open the camera on your phone or tablet.', 'Point it at the code.', 'Tap the link that appears, then click Allow on this computer.'];
       h += `<div style="display:flex;flex-direction:column;gap:18px"><div style="display:flex;flex-direction:column;gap:8px"><span class="h-lg">${cert ? 'Install the certificate' : "Scan with the camera of your phone or tablet"}</span>
-          <span class="sub" style="font-size:14px;line-height:1.55">${cert ? 'Optional, once per iPhone. It stops the browser warning about the connection.' : "The remote opens in the device's browser. The device and the computer need to be on the same Wi-Fi."}</span></div>
+          <span class="sub" style="font-size:14px;line-height:1.55">${cert ? 'Optional, once per device. It stops the browser warning about the connection. Android steps are on the Certificate page.' : "The remote opens in the device's browser. The device and the computer need to be on the same Wi-Fi."}</span></div>
         <div class="w-qr">${qrTile(cert ? S.certQr : S.qr, 156, false, !cert)}<div class="col" style="gap:10px">${steps(list)}</div></div>
         ${S.connected > 0 ? `<span class="pill tone-green" style="align-self:flex-start"><span class="dot"></span>${plural(S.connected, 'device', 'devices')} connected</span>` : ''}
         ${S.status === 'public' ? `<div class="note" style="background:var(--amber-bg)">${ic('shieldAlert')}<span>This network is marked Public, so devices are blocked. Finish, then fix it on the Connect page.</span></div>` : ''}
@@ -656,9 +709,9 @@
         <span class="dlg-note">${ic('info')}No answer in 2 minutes counts as Decline.</span>${buttons('Allow')}</div>`;
     }
     if (k === 'file') {
-      return `<div class="dialog">${head('download', `${esc(S.device)} wants to send a file`, "Save it on this computer? It's also pasted into the app that's in front.")}
+      return `<div class="dialog">${head('download', `${esc(S.device)} wants to send a file`, S.openFolder ? 'Save it into the folder that is open in File Explorer?' : "Save it on this computer? It's also pasted into the app that's in front.")}
         <div class="files"><div class="file">${ic('file')}<span class="ellipsis" style="flex:1;font:500 13px var(--sans)">${esc(S.fileName)}</span><span class="mono tone-sub" style="font-size:11.5px">${esc(S.size)}</span></div></div>
-        <span class="dlg-note">${ic('folder')}<span class="ellipsis" style="flex:1">Saves to ${esc(S.folder)}</span><button class="btn link" style="height:auto;font-size:12.5px" data-act="changeFolder">Change</button></span>${buttons('Save')}</div>`;
+        <span class="dlg-note">${ic('folder')}<span class="ellipsis" style="flex:1">Saves to ${esc(S.folder)}</span>${S.openFolder ? '' : `<button class="btn link" style="height:auto;font-size:12.5px" data-act="changeFolder">Change</button>`}</span>${buttons('Save')}</div>`;
     }
     const items = S.items || [];
     const n = items.length + (S.more || 0);

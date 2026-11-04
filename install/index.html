@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" data-releases="https://github.com/vlinkevych/TonttuRemote/releases">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F3F3EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0B0D" media="(prefers-color-scheme: dark)">
+<title>How to install Tonttu on Windows | Tonttu</title>
+<meta name="description" content="Download, run the installer, scan the QR code, and what the Windows and browser security messages mean. About two minutes.">
+<link rel="canonical" href="https://tontturemote.app/install">
+<meta property="og:title" content="How to install Tonttu on Windows | Tonttu">
+<meta property="og:description" content="Download, run the installer, scan the QR code, and what the Windows and browser security messages mean. About two minutes.">
+<meta property="og:url" content="https://tontturemote.app/install">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://tontturemote.app/assets/img/pc-connect-light.webp">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="stylesheet" href="/desktop/fonts.css">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand-group"><a class="brand" href="/"><span class="logo"><i></i></span><b>Tonttu</b></a>
+    <a class="beta" href="https://github.com/vlinkevych/TonttuRemote/releases" title="Tonttu is in beta. See the release notes.">BETA</a></div>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/#features">Features</a>
+      <a href="/#files">File transfer</a>
+      <a href="/#how">How it works</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn primary small" href="https://github.com/vlinkevych/TonttuRemote/releases/latest" data-dl-link data-umami-event="download" data-umami-event-place="header">Download free</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="guide wrap">
+  <nav class="toc" aria-label="Steps">
+    <span class="eyebrow">Steps</span>
+    <a href="#i1"><span class="num">01</span>Run the installer</a>
+    <a href="#i2"><span class="num">02</span>Finish setup</a>
+    <a href="#i3"><span class="num">03</span>Connect your phone</a>
+    <a href="#i4"><span class="num">04</span>Browser warning</a>
+    <a href="#i5"><span class="num">05</span>Install the certificate</a>
+    <a href="#i6"><span class="num">06</span>Troubleshooting</a>
+  </nav>
+  <div class="guide-main">
+    <div class="dl-banner" role="status">
+      <div><b>Your download has started.</b><small>TonttuSetup <span data-dl-version></span> · free · Windows 10 (2004+) and 11, 64-bit</small></div>
+      <a href="https://github.com/vlinkevych/TonttuRemote/releases/latest" data-dl-link data-umami-event="download" data-umami-event-place="retry">Download didn’t start? Try again</a>
+    </div>
+    <h1>How to install Tonttu on Windows</h1>
+    <p class="lead">About two minutes from download to controlling your PC from your phone. Windows and your phone’s browser may each show a security message the first time. This guide explains why.</p>
+    <div class="beta-note"><span class="beta">BETA</span><div><b>Tonttu is in beta.</b><span>Everyday features work, but you may run into bugs or rough edges. Updates install automatically when no phone is connected. If something breaks, <a href="/contact">tell me</a>.</span></div></div>
+
+    <section class="gstep" id="i1">
+      <h2><span class="num">01</span>Run the installer</h2>
+      <p>Open <span class="key">TonttuSetup-&lt;version&gt;.exe</span> from your Downloads folder.</p>
+      <p>Tonttu is in beta and its installer isn’t code-signed yet. The app also installs a small system service that lets it control the mouse and keyboard even in windows that run as administrator. Because of this, Windows shows “Windows protected your PC” before installing.</p>
+      <p><strong>To continue, click More info, then Run anyway.</strong></p>
+      <div class="figure" style="flex-direction:column;align-items:center;gap:12px">
+        <div class="smartscreen" role="img" aria-label="The Windows protected your PC message, with More info and then Run anyway">
+          <div class="ss-title">Windows protected your PC</div>
+          <p>Microsoft Defender SmartScreen prevented an unrecognized app from starting. Running this app might put your PC at risk.</p>
+          <p class="ss-link"><span class="mark">More info</span></p>
+          <p class="ss-app">App: TonttuSetup-1.0.1.exe<br>Publisher: Unknown publisher</p>
+          <div class="ss-buttons"><span class="ss-btn mark">Run anyway</span><span class="ss-btn ss-primary">Don’t run</span></div>
+        </div>
+        <span class="provisional">ILLUSTRATION</span>
+      </div>
+      <p>Next, Windows asks for permission to make changes, because the installer sets up a small service. The publisher shows as unknown for the same reason: the beta isn’t code-signed. <strong>Choose Yes.</strong></p>
+      <div class="figure uac">
+        <picture><source srcset="/assets/img/uac-dark.webp" media="(prefers-color-scheme: dark)"><img src="/assets/img/uac-light.webp" width="912" height="794" alt="Windows User Account Control: Do you want to allow this app from an unknown publisher to make changes to your device? Yes or No" loading="lazy" style="max-width:456px;box-shadow:none;border-radius:0"></picture>
+      </div>
+      <span class="provisional">RECREATED · WINDOWS 11</span>
+      <p>The installer then shows the licence, lets you pick the folder and installs in a few seconds. On its last page it offers to start Tonttu right away and to allow devices on networks Windows marks as Public (leave that off at home).</p>
+    </section>
+
+    <section class="gstep" id="i2">
+      <h2><span class="num">02</span>Finish setup</h2>
+      <p>When installation finishes, Tonttu opens a short welcome. It shows what the remote can do and the QR code to scan, and asks whether to start with Windows. Afterwards the app keeps running in the system tray, next to the clock.</p>
+      <div class="figure pc">
+        <picture><source srcset="/assets/img/pc-welcome-dark.webp" media="(prefers-color-scheme: dark)"><img src="/assets/img/pc-welcome-light.webp" width="1280" height="882" alt="The welcome window of the PC app: what the remote does, then the QR code and the start-with-Windows choice (design mock-up)" loading="lazy"></picture>
+      </div>
+    </section>
+
+    <section class="gstep" id="i3">
+      <h2><span class="num">03</span>Connect your phone</h2>
+      <ol class="nsteps">
+        <li>Connect your phone to the <strong>same Wi-Fi network as the PC</strong>.</li>
+        <li>Open the camera and scan the QR code. Tap the link that appears.</li>
+        <li>On the PC, click <span class="key">Allow</span> to let the phone connect. Only devices you allow can control the PC.</li>
+      </ol>
+      <div class="figure">
+        <picture><source srcset="/assets/img/pc-dialog-pair-dark.webp" media="(prefers-color-scheme: dark)"><img class="dialog" src="/assets/img/pc-dialog-pair-light.webp" width="772" height="497" alt="The Allow a new device dialog on the PC" loading="lazy"></picture>
+      </div>
+    </section>
+
+    <section class="gstep" id="i4">
+      <h2><span class="num">04</span>The browser security warning</h2>
+      <p>If the security certificate isn’t installed yet, you may see a security warning when the remote opens. This happens because the certificate is made by your own computer, not by a company the browser already knows. The connection is still encrypted and stays on your home network.</p>
+      <p><strong>On iPhone and iPad: tap Show Details, then visit this website, then Visit Website.</strong></p>
+      <p><strong>In Chrome on Android: open <span class="key">Advanced</span> and select <span class="mark">Proceed to … (unsafe)</span>.</strong></p>
+      <div class="warn-steps">
+        <figure><img src="/assets/img/safari-1.webp" width="720" height="1565" alt="Safari: This Connection Is Not Private, with Show Details marked" loading="lazy"><figcaption><span class="num">1</span>Tap Show Details</figcaption></figure>
+        <figure><img src="/assets/img/safari-2.webp" width="720" height="1565" alt="The details text, with the visit this website link marked" loading="lazy"><figcaption><span class="num">2</span>Tap visit this website</figcaption></figure>
+        <figure><img src="/assets/img/safari-3.webp" width="720" height="1565" alt="The confirmation sheet, with Visit Website marked" loading="lazy"><figcaption><span class="num">3</span>Confirm with Visit Website</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="gstep" id="i5">
+      <h2><span class="num">05</span>Install the certificate <span class="tag">Optional</span></h2>
+      <p>The connection between the phone and your computer is encrypted. The certificate for it is made by your computer, not by a company the browser already knows, so the browser shows a security warning when the remote opens.</p>
+      <p>Installing the certificate tells the phone to trust your computer. The warning goes away, the connection stays encrypted, and nothing leaves your home network.</p>
+      <p><strong>Install it once on each phone or tablet.</strong></p>
+      <div class="seg" role="tablist" data-tabs="cert">
+        <button type="button" class="on" role="tab" aria-selected="true" data-tab="ios">iPhone and iPad</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="android">Android</button>
+      </div>
+      <ol class="nsteps tabpane on" data-tabs="cert" data-tab="ios">
+        <li>In the PC app, open Certificate.</li>
+        <li>Scan the code with the iPhone camera and tap Allow to download the profile.</li>
+        <li>Open Settings › General › VPN &amp; Device Management.</li>
+        <li>Tap the Tonttu profile, then Install.</li>
+        <li>Open Settings › General › About › Certificate Trust Settings.</li>
+        <li>Turn on full trust for Tonttu. Done.</li>
+      </ol>
+      <div class="figure pc tabpane on" data-tabs="cert" data-tab="ios" style="flex-direction:row">
+        <picture><source srcset="/assets/img/pc-certificate-dark.webp" media="(prefers-color-scheme: dark)"><img src="/assets/img/pc-certificate-light.webp" width="1400" height="876" alt="The Certificate page of the PC app: the code to scan and the iPhone steps" loading="lazy"></picture>
+      </div>
+      <ol class="nsteps tabpane" data-tabs="cert" data-tab="android">
+        <li>In the PC app, open Certificate and choose Android.</li>
+        <li>Scan the code with the camera. If the browser warns about the connection, tap Advanced, then Proceed; the certificate file downloads.</li>
+        <li>Open Settings › Security &amp; privacy › More security settings › Encryption &amp; credentials. On Samsung phones: Security and privacy › Other security settings.</li>
+        <li>Tap Install a certificate › CA certificate, confirm Install anyway, and pick the downloaded file from Downloads.</li>
+        <li>Done. Android may show a “network may be monitored” note: that is its standard message for any certificate you add yourself. Works in Chrome and Samsung Internet; Firefox on Android ignores certificates you add yourself.</li>
+      </ol>
+      <div class="figure pc tabpane" data-tabs="cert" data-tab="android" style="flex-direction:row">
+        <picture><source srcset="/assets/img/pc-certificate-android-dark.webp" media="(prefers-color-scheme: dark)"><img src="/assets/img/pc-certificate-android-light.webp" width="1400" height="876" alt="The Certificate page of the PC app with the Android tab: the code to scan and the Android steps" loading="lazy"></picture>
+      </div>
+    </section>
+
+    <section class="gstep" id="i6">
+      <h2><span class="num">06</span>Troubleshooting</h2>
+      <div class="trouble">
+        <details open><summary>The QR code doesn’t open the page</summary><ul>
+          <li>Scan with the phone’s own camera app.</li>
+          <li>Hold the phone steady and move a little closer, so the code fills most of the screen.</li>
+          <li>Wait for the link to appear on the screen, then tap it.</li>
+          <li>Still nothing? Type the address shown in the PC app into the phone’s browser.</li>
+        </ul></details>
+        <details open><summary>The page doesn’t load and nothing appears on the PC</summary><ul>
+          <li>Check that the phone is connected to Wi-Fi, not mobile data.</li>
+          <li>Make sure the phone and the PC are on the same network. Guest networks often keep devices apart, so use your main Wi-Fi.</li>
+          <li>Check the network settings on the PC. If Windows marks the network as Public, it treats it as untrusted and the firewall stops phones. On the app’s Connect page, choose <strong>Mark as Private</strong>, or allow phones on public networks in <strong>Settings › Network</strong>. We don’t recommend allowing public networks.</li>
+          <li>If the PC has both Wi-Fi and a cable, or uses a VPN, the code may use the wrong address. Pick the right one in <strong>Settings › Network › Network adapter</strong>.</li>
+        </ul></details>
+        <details><summary>The browser shows a security warning</summary><ul>
+          <li>This is expected until the certificate is installed. The connection is still encrypted and stays on your home network.</li>
+          <li>To continue on iPhone or iPad: Show Details, then visit this website, then Visit Website. In Chrome on Android, open Advanced and select Proceed to … (unsafe).</li>
+          <li>To stop the warning for good, <a href="#i5">install the certificate</a>.</li>
+        </ul></details>
+        <details><summary>I installed the certificate, but the connection still shows as not secure</summary><ul>
+          <li>On iPhone or iPad, make sure you finished every step. Installing the profile isn’t enough: turn on full trust in <strong>Settings › General › About › Certificate Trust Settings</strong>.</li>
+          <li>Close the browser tab and scan the code again.</li>
+          <li>If the PC’s network address has changed, the old certificate no longer matches. Install the new certificate from the app’s Certificate page.</li>
+          <li>To stop the address from changing, give the PC a fixed address in your router’s settings. This is often called a DHCP reservation.</li>
+        </ul></details>
+        <details><summary>The home-screen icon stopped working</summary><ul>
+          <li>An icon added to the home screen only connects while the phone trusts the certificate: unlike the browser, it has no “continue anyway” button. With the certificate removed, or its trust turned off, the icon opens a blank page.</li>
+          <li>Install the certificate again from the app’s Certificate page, or open the remote in the browser instead: scan the code, continue past the warning, and use it there.</li>
+          <li>On iPhone, a link to a site that has a home-screen icon may open in that icon rather than in Safari. Then open Safari yourself and type the address shown in the PC app.</li>
+        </ul></details>
+        <details><summary>Windows asks for admin permission</summary><ul>
+          <li>Only during installation, so the app can set up its service and let phones through the Windows firewall. After that it starts quietly when you sign in.</li>
+        </ul></details>
+      </div>
+      <p>Still stuck? Email <a href="mailto:feedback@tontturemote.app">feedback@tontturemote.app</a> or see <a href="/help">Help</a>.</p>
+    </section>
+  </div>
+</div>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="brand-col">
+      <a class="brand" href="/"><span class="logo"><i></i></span><b>Tonttu</b></a>
+      <p>Free for Windows 10 (2004+) and 11, 64-bit.<br>Made by one person in Cyprus. © 2026</p>
+    </div>
+    <div><h4>Product</h4><ul><li><a href="/#features">Features</a></li><li><a href="/#files">File transfer</a></li><li><a href="/#how">How it works</a></li><li><a href="/#faq">FAQ</a></li><li><a href="https://github.com/vlinkevych/TonttuRemote/releases" data-umami-event="releases-link">Releases</a></li></ul></div>
+    <div><h4>Support</h4><ul><li><a href="/install">Installation guide</a></li><li><a href="/help" data-umami-event="help-link" data-umami-event-place="footer">Help</a></li><li><a href="/contact">Contact</a></li><li><a href="https://github.com/vlinkevych/TonttuRemote/blob/main/SECURITY.md">Security policy</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="/privacy">Privacy policy</a></li><li><a href="/licence">Licence agreement</a></li></ul></div>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+
+
+</body>
+</html>

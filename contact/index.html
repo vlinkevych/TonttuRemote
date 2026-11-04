@@ -1,56 +1,149 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-releases="https://github.com/vlinkevych/TonttuRemote/releases">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark light">
-<title>Contact · Tonttu</title>
-<meta name="description" content="Tonttu: Wi-Fi mouse and keyboard for your Windows PC, from your phone or tablet.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F3F3EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0B0D" media="(prefers-color-scheme: dark)">
+<title>Contact | Tonttu</title>
+<meta name="description" content="Report a bug, suggest an idea or send feedback about Tonttu.">
+<link rel="canonical" href="https://tontturemote.app/contact">
+<meta property="og:title" content="Contact | Tonttu">
+<meta property="og:description" content="Report a bug, suggest an idea or send feedback about Tonttu.">
+<meta property="og:url" content="https://tontturemote.app/contact">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://tontturemote.app/assets/img/pc-connect-light.webp">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/favicon.png">
 <link rel="stylesheet" href="/desktop/fonts.css">
-<style>
-  :root { color-scheme: dark; --bg: #0A0B0D; --s1: #15161A; --line: rgba(255,255,255,0.09); --txt: #EDEEF0; --sub: #8B9099; --lime: #C8F135; --link: #C8F135; }
-  @media (prefers-color-scheme: light) { :root { color-scheme: light; --bg: #EFEFEB; --s1: #FFFFFF; --line: rgba(0,0,0,0.1); --txt: #15161A; --sub: #5E636B; --lime: #5F7414; --link: #4A5A10; } }
-  html, body { margin: 0; background: var(--bg); color: var(--txt); font: 16px/1.6 Geist, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif; }
-  a { color: var(--link); }
-  header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 24px; max-width: 760px; margin: 0 auto; }
-  header a.brand { font-weight: 700; font-size: 20px; color: var(--txt); text-decoration: none; }
-  header a.brand span { color: var(--lime); }
-  nav { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; }
-  nav a { color: var(--sub); text-decoration: none; }
-  nav a:hover { color: var(--txt); }
-  main { max-width: 760px; margin: 0 auto; padding: 8px 24px 64px; box-sizing: border-box; }
-  h1 { font-size: 34px; line-height: 1.2; letter-spacing: -0.02em; margin: 16px 0 8px; }
-  h2 { font-size: 22px; margin: 36px 0 8px; }
-  h3 { font-size: 17px; margin: 24px 0 6px; }
-  p, li { color: var(--txt); }
-  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 15px; }
-  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-  th { color: var(--sub); font-weight: 600; }
-  code { font-family: "Geist Mono", ui-monospace, Consolas, monospace; font-size: 14px; }
-  .btn { display: inline-block; padding: 12px 20px; border-radius: 12px; background: var(--lime); color: #0E1206; font-weight: 600; text-decoration: none; }
-  .sub { color: var(--sub); }
-  .card { background: var(--s1); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin: 16px 0; }
-  footer { max-width: 760px; margin: 0 auto; padding: 24px; color: var(--sub); font-size: 13px; border-top: 1px solid var(--line); }
-  @media (max-width: 480px) { h1 { font-size: 28px; } header { flex-direction: column; align-items: flex-start; } }
-</style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-<header>
-  <a class="brand" href="/"><span>Tonttu</span></a>
-  <nav><a href="/help">Help</a><a href="/privacy">Privacy</a><a href="/licence">Licence</a><a href="/contact">Contact</a><a href="https://github.com/vlinkevych/TonttuRemote/releases">Releases</a></nav>
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand-group"><a class="brand" href="/"><span class="logo"><i></i></span><b>Tonttu</b></a>
+    <a class="beta" href="https://github.com/vlinkevych/TonttuRemote/releases" title="Tonttu is in beta. See the release notes.">BETA</a></div>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">☰</button>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/#features">Features</a>
+      <a href="/#files">File transfer</a>
+      <a href="/#how">How it works</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn primary small" href="https://github.com/vlinkevych/TonttuRemote/releases/latest" data-dl-link data-umami-event="download" data-umami-event-place="header">Download free</a>
+    </nav>
+  </div>
 </header>
 <main>
-<h1>Contact</h1>
-<p>Tonttu is made by Volodymyr Linkevych, an individual developer in Cyprus.</p>
-<div class="card">
-  <p><strong>Feedback, questions, problems:</strong> <a href="mailto:feedback@tontturemote.app">feedback@tontturemote.app</a><br>
-  Or use Send feedback in the app (Help page): it drafts the email with the version numbers filled in and can attach a diagnostics file you can read first.</p>
-  <p><strong>Security problems:</strong> <a href="mailto:security@tontturemote.app">security@tontturemote.app</a>, privately, before publishing details. See the <a href="https://github.com/vlinkevych/TonttuRemote/blob/main/SECURITY.md">security policy</a>.</p>
-  <p><strong>Your data:</strong> what the app and the website do with it, and your rights, are in the <a href="/privacy">privacy policy</a>. Requests about your data go to the feedback address; I answer within a month.</p>
+<div class="contact wrap">
+  <div>
+    <h1>Contact</h1>
+    <p class="lead intro">Report a bug, suggest an idea or tell me what you think. Tonttu is in beta, so every message helps.</p>
+    <form class="form" id="contactForm" data-email="feedback@tontturemote.app" data-security="security@tontturemote.app" data-api="https://api.tontturemote.app/contact" novalidate>
+      <div class="field">
+        <span class="lbl">What’s it about?</span>
+        <div class="types">
+          <label><input type="radio" name="type" value="Bug" checked><span>Bug</span></label>
+          <label><input type="radio" name="type" value="Idea"><span>Idea</span></label>
+          <label><input type="radio" name="type" value="Feedback"><span>Feedback</span></label>
+          <label><input type="radio" name="type" value="Security"><span>Security</span></label>
+        </div>
+      </div>
+
+      <div class="field only-feedback" hidden>
+        <span class="lbl">How would you rate Tonttu?</span>
+        <div class="stars" role="radiogroup" aria-label="Rating">
+          <button type="button" data-star="1" aria-label="1 star">★</button><button type="button" data-star="2" aria-label="2 stars">★</button><button type="button" data-star="3" aria-label="3 stars">★</button><button type="button" data-star="4" aria-label="4 stars">★</button><button type="button" data-star="5" aria-label="5 stars">★</button>
+          <span class="star-label hint">Tap a star</span>
+          <input type="hidden" name="rating" value="0">
+        </div>
+        <label class="check"><input type="checkbox" name="allowPublish" value="1"><span>You may publish my feedback on the website as a testimonial.</span></label>
+        <div class="field publish-name" hidden>
+          <label for="publicName">Name to show <span class="opt">Optional</span></label>
+          <input id="publicName" name="publicName" type="text" maxlength="60" placeholder="e.g. Mika, Helsinki">
+          <span class="hint">Leave empty to appear as “Tonttu user”. Your email is never published.</span>
+        </div>
+      </div>
+
+      <div class="note only-security" hidden>Security reports are private and only seen by me. Please include your email so I can follow up, and don’t share the issue publicly until it’s fixed.</div>
+
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required placeholder="What happened, and what did you expect? Steps to reproduce help a lot."></textarea>
+        <span class="hint field-error" hidden>Write a few words so I know what happened.</span>
+      </div>
+
+      <div class="field attach-field">
+        <label class="attach" for="attachments">
+          <span class="plus">+</span>
+          <span class="attach-text"><span class="attach-title">Add attachment <span class="opt">Optional</span></span><span class="hint">Screenshots or screen recordings · PNG, JPG, MP4 · up to 5 files, 10 MB each</span></span>
+          <input id="attachments" name="attachments" type="file" multiple accept="image/png,image/jpeg,video/mp4" class="visually-hidden">
+        </label>
+        <ul class="files" id="fileList"></ul>
+      </div>
+
+      <div class="field">
+        <label for="email">Your email <span class="opt">Optional</span></label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+        <span class="hint email-hint">Leave your email if you’d like me to follow up.</span>
+      </div>
+      <div class="two">
+        <div class="field">
+          <label for="device">Device <span class="opt">Optional</span></label>
+          <select id="device" name="device"><option value="">Choose…</option><option>iPhone</option><option>iPad</option><option>Android phone</option><option>Android tablet</option><option>Other</option></select>
+        </div>
+        <div class="field">
+          <label for="appVersion">App version <span class="opt">Optional</span></label>
+          <input id="appVersion" name="appVersion" type="text" placeholder="Shown in the PC app under About">
+        </div>
+      </div>
+      <div class="hp" aria-hidden="true"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAFz9HMhz06Ytk507" data-size="flexible" data-appearance="interaction-only"></div>
+      <div class="form-state" id="formState" role="status"></div>
+      <div class="foot">
+        <span class="hint">Your message is used only to reply and to improve Tonttu. See the <a href="/privacy">privacy policy</a>.</span>
+        <button class="btn primary" type="submit">Send message</button>
+      </div>
+    </form>
+    <div class="form sent" id="formSent" hidden>
+      <span class="result-check">✓</span>
+      <h2>Thanks, your message is on its way.</h2>
+      <p class="muted" id="sentNote"></p>
+      <button class="btn secondary" type="button" id="sendAnother">Send another message</button>
+    </div>
+  </div>
+  <aside class="aside">
+    <div class="aside-box">
+      <h3>Having trouble connecting?</h3>
+      <p style="margin-bottom:10px">Most setup problems are covered in the installation guide.</p>
+      <a class="link" href="/install#i6">Troubleshooting →</a>
+    </div>
+    <h3>Prefer email?</h3>
+    <p><a href="mailto:feedback@tontturemote.app">feedback@tontturemote.app</a><br>The app’s own Feedback page can attach a diagnostics file you can read first.</p>
+    <h3>Found a security issue?</h3>
+    <p>Choose Security in the form, or write to <a href="mailto:security@tontturemote.app">security@tontturemote.app</a>. Reports stay private. See the <a href="https://github.com/vlinkevych/TonttuRemote/blob/main/SECURITY.md">security policy</a>.</p>
+    <h3>Your data</h3>
+    <p>What the app and this website do with it, and your rights, are in the <a href="/privacy">privacy policy</a>. Requests about your data go to the feedback address; I answer within a month.</p>
+    <h3>Who’s behind it</h3>
+    <p>Tonttu is made by one developer in Cyprus. No phone support and no office hours: email is the reliable way.</p>
+  </aside>
 </div>
-<p class="sub">No phone support and no office hours: it's one person, and email is the reliable way.</p>
 
 </main>
-<footer>© 2026 Tonttu · <a href="/privacy">Privacy policy</a> · <a href="/licence">Licence</a> · <a href="/contact">Contact</a></footer>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="brand-col">
+      <a class="brand" href="/"><span class="logo"><i></i></span><b>Tonttu</b></a>
+      <p>Free for Windows 10 (2004+) and 11, 64-bit.<br>Made by one person in Cyprus. © 2026</p>
+    </div>
+    <div><h4>Product</h4><ul><li><a href="/#features">Features</a></li><li><a href="/#files">File transfer</a></li><li><a href="/#how">How it works</a></li><li><a href="/#faq">FAQ</a></li><li><a href="https://github.com/vlinkevych/TonttuRemote/releases" data-umami-event="releases-link">Releases</a></li></ul></div>
+    <div><h4>Support</h4><ul><li><a href="/install">Installation guide</a></li><li><a href="/help" data-umami-event="help-link" data-umami-event-place="footer">Help</a></li><li><a href="/contact">Contact</a></li><li><a href="https://github.com/vlinkevych/TonttuRemote/blob/main/SECURITY.md">Security policy</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="/privacy">Privacy policy</a></li><li><a href="/licence">Licence agreement</a></li></ul></div>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </body>
 </html>
