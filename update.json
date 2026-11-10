@@ -1,20 +1,20 @@
 {
     "v":  1,
-    "issued":  "2026-11-04T23:16:31Z",
-    "expires":  "2027-02-02T23:16:31Z",
+    "issued":  "2026-11-10T21:09:45Z",
+    "expires":  "2027-02-08T21:09:45Z",
     "movedTo":  null,
     "channels":  {
                      "beta":  {
-                                  "version":  "1.0.1-beta.3",
-                                  "published":  "2026-11-04",
-                                  "url":  "https://github.com/vlinkevych/TonttuRemote/releases/download/v1.0.1-beta.3/TonttuSetup-1.0.1-beta.3.exe",
-                                  "size":  58664020,
-                                  "sha256":  "a4057baff0ad8140bfdc794e0f7921e7cde269d3f14c18f7e064c6953156cd85",
+                                  "version":  "1.0.1-beta.4",
+                                  "published":  "2026-11-10",
+                                  "url":  "https://github.com/vlinkevych/TonttuRemote/releases/download/v1.0.1-beta.4/TonttuSetup-1.0.1-beta.4.exe",
+                                  "size":  58670522,
+                                  "sha256":  "9e430702b2732a60f9adbf64b079f7006490729ddca34cf197f9e39b02a248f8",
                                   "critical":  false,
                                   "criticalBelow":  null,
                                   "rolloutPercent":  100,
-                                  "notes":  "Beta 3: fixes from the first round of phone testing, feedback straight from the app, and the new website.\n\nFixed\n- Download to the phone: the saved file was a text file saying the link wasn\u0027t valid. Downloads now work when the PC doesn\u0027t ask for approval.\n- Sending a clipboard image or a file: the phone\u0027s \"Recent\" list stayed at \"Sending…\". The PC now reports back (saved, pasted, declined, or why it failed).\n- The phone\u0027s text field now follows the caret when you click or move it on the PC (Notepad, VS Code and the like). It didn\u0027t before.\n- iOS home-screen app: the blurred band under the status bar is gone.\n\nNew\n- Feedback has its own place in the menu and is a form now: it goes straight to the developer, with an optional reply email, an attached file, and the diagnostics zip if you tick it. The email draft is still there as a second button.\n- Certificate page has Android steps and its own code to scan.\n- Files sent from the phone land in the folder that\u0027s open in File Explorer, and only there. The phone shows the destination first and can choose the received-files folder instead. Settings › Files turns this off.\n- Pick several photos or files at once on the phone.\n- If a phone stops trusting the certificate, the PC says so and tells you how to continue.\n- Settings: Updates moved up, \"Check for updates\" on the About page checks in place, and the Stable channel choice only appears once a stable release exists.\n- Website: tontturemote.app has the installation guide, a contact form and the full help.\n\nGood to know\n- Still a beta without code signing: Windows shows \"Windows protected your PC\" (More info › Run anyway) and then asks for permission (Yes).\n- Everything stays on your home network. Feedback leaves it only when you send it.\n\nRequires Windows 10 (version 2004 or later) or Windows 11, 64-bit.",
-                                  "notesUrl":  "https://github.com/vlinkevych/TonttuRemote/releases/tag/v1.0.1-beta.3"
+                                  "notes":  "Beta 4: send videos and other big files from the phone, and media controls for Media Player.\n\nFixed\n- Sending a video or any file over 25 MB from the phone failed. Files of any size now go through, with a real progress bar in the phone\u0027s Recent list.\n- Media Player (the app that comes with Windows 11) got no media buttons on the phone. They show now.\n- The phone\u0027s Play button now turns into Pause while something is playing, and back.\n- Home-screen app on iPhone: with the keyboard up, the touchpad could shrink to nothing and leave empty space above the keyboard.\n\nChanged\n- Settings › Administrator access is shorter.\n\nGood to know\n- Still a beta without code signing: Windows shows \"Windows protected your PC\" (More info › Run anyway) and then asks for permission (Yes).\n- Everything stays on your home network.\n\nRequires Windows 10 (version 2004 or later) or Windows 11, 64-bit.",
+                                  "notesUrl":  "https://github.com/vlinkevych/TonttuRemote/releases/tag/v1.0.1-beta.4"
                               }
                  }
 }
